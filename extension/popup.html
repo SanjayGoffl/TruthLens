@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root { color-scheme: light dark; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
+      body { width: 300px; margin: 0; padding: 16px; background: #F6F7FC; color: #12122B; }
+      @media (prefers-color-scheme: dark) { body { background: #080A18; color: #EEF2FF; } input { background: #11152B; color: inherit; border-color: #252B4A; } }
+      h1 { font-size: 15px; margin: 0 0 4px; }
+      p { font-size: 12px; margin: 0 0 12px; opacity: 0.7; word-break: break-all; }
+      button { width: 100%; padding: 10px; margin-bottom: 8px; border: 0; border-radius: 10px; font-weight: 600; cursor: pointer; background: linear-gradient(135deg, #6366F1, #7C3AED); color: #fff; }
+      button.alt { background: transparent; border: 1px solid #6366F1; color: inherit; }
+      label { font-size: 11px; opacity: 0.7; display: block; margin: 10px 0 4px; }
+      input { width: 100%; box-sizing: border-box; padding: 7px 9px; border: 1px solid #e3e8ee; border-radius: 8px; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <h1>TruthLens AI</h1>
+    <p id="page">Loading current page…</p>
+    <button id="page-btn">Analyze this page</button>
+    <button id="sel-btn" class="alt">Analyze selected text</button>
+    <label for="app">TruthLens AI web app address</label>
+    <input id="app" type="url" placeholder="http://localhost:5173" />
+    <script src="handoff.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

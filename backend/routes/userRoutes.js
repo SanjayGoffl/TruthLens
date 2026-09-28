@@ -1,0 +1,12 @@
+const router = require('express').Router();
+const userController = require('../controllers/userController');
+const asyncHandler = require('../utils/asyncHandler');
+router.get('/profile', asyncHandler(userController.getProfile));
+router.get('/service-status', asyncHandler(userController.getServiceStatus));
+router.put('/profile', asyncHandler(userController.updateProfile));
+router.put('/password', asyncHandler(userController.changePassword));
+router.put('/preferences', asyncHandler(userController.updatePreferences));
+router.get('/notifications', asyncHandler(userController.getNotifications));
+router.put('/notifications/read-all', asyncHandler(userController.markAllNotificationsRead));
+router.put('/notifications/:id/read', asyncHandler(userController.markNotificationRead));
+module.exports = router;

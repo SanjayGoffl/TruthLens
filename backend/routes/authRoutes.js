@@ -1,0 +1,15 @@
+const router = require('express').Router();
+const authController = require('../controllers/authController');
+const asyncHandler = require('../utils/asyncHandler');
+router.post('/register', asyncHandler(authController.register));
+router.post('/login', asyncHandler(authController.login));
+router.post('/verify-otp', asyncHandler(authController.verifyOtp));
+router.post('/resend-otp', asyncHandler(authController.resendOtp));
+router.get('/google', asyncHandler(authController.googleUrl));
+router.post('/google', asyncHandler(authController.googleExchange));
+router.get('/google/callback', asyncHandler(authController.googleCallback));
+router.post('/forgot-password', asyncHandler(authController.forgotPassword));
+router.post('/verify-reset-otp', asyncHandler(authController.verifyResetOtp));
+router.post('/reset-password', asyncHandler(authController.resetPassword));
+router.post('/logout', asyncHandler(authController.logout));
+module.exports = router;
