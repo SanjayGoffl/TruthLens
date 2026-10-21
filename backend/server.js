@@ -21,6 +21,7 @@ async function start() {
   const shutdown = async () => {
     console.log('Shutting down gracefully...');
     server.close();
+    await require('./config/db').closeDB();
     process.exit(0);
   };
   process.on('SIGINT', shutdown);
