@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ChevronDown, LayoutDashboard, LogOut, Menu, User as UserIcon, X } from 'lucide-react';
 import Logo from '../ui/Logo';
@@ -18,6 +18,7 @@ export default function PublicHeader() {
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState(null);
+  const menuRef = useRef(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,6 +26,14 @@ export default function PublicHeader() {
     setOpen(false);
     setMenuOpen(false);
   }, [location.pathname]);
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onDown = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false);
+    };
+    document.addEventListener('mousedown', onDown);
+    return () => document.removeEventListener('mousedown', onDown);
+  }, [menuOpen]);
   useEffect(() => {
     if (location.pathname !== '/') {
       setActiveId(null);
@@ -80,7 +89,7 @@ export default function PublicHeader() {
         <div className="d-flex align-items-center gap-2">
           <ThemeToggle />
           {user ? (
-            <div className="position-relative d-none d-sm-block">
+            <div className="position-relative d-none d-sm-block" ref={menuRef}>
               <button
                 type="button"
                 className="btn btn-ghost d-inline-flex align-items-center gap-2 py-1 pe-2 ps-1"
@@ -120,13 +129,13 @@ export default function PublicHeader() {
               <button type="button" className="btn btn-primary btn-sm px-3" onClick={() => navigate('/register')}>Sign up</button>
             </div>
           )}
-          <button type="button" className="btn btn-ghost d-lg-none p-2" aria-label="Toggle menu" style={{ width: 40, height: 40 }} onClick={() => setOpen((v) => !v)}>
+          <button type="button" className="btn btn-ghost d-lg-none p-2" aria-label="Toggle menu" aria-expanded={open} aria-controls="public-mobile-nav" style={{ width: 40, height: 40 }} onClick={() => setOpen((v) => !v)}>
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
       {open ? (
-        <div className="d-lg-none card rounded-0 border-0 border-top" style={{ position: 'absolute', insetInline: 0, background: 'var(--card)' }}>
+        <div className="d-lg-none card rounded-0 border-0 border-top" id="public-mobile-nav" style={{ position: 'absolute', insetInline: 0, background: 'var(--card)' }}>
           <nav className="p-2 d-flex flex-column" aria-label="Mobile navigation">
             {NAV.map((item) => (
               <button key={item.label} type="button" className="btn btn-ghost text-start justify-content-between" onClick={() => (item.section ? goSection(item.section) : navigate('/'))}>
