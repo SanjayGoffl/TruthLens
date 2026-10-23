@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, FileText, Link2, Radar, ScanSearch, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, FileText, Link2, Radar, RotateCcw, ScanSearch, ShieldCheck, Sparkles } from 'lucide-react';
 import { goSection } from '../../utils/scroll';
 import { useAuth } from '../../context/AuthContext';
 const STAGES = [
@@ -198,15 +198,8 @@ function TruthLensStage() {
           <span className="d-inline-flex align-items-center gap-1"><FileText size={13} style={{ color: 'var(--primary)' }} /> PDF reports</span>
         </div>
         <div className="d-flex flex-wrap gap-2 justify-content-center">
-          <button
-            type="button"
-            className="btn btn-primary btn-sm px-3"
-            onClick={() => (isAuthenticated ? navigate('/user/analyze') : navigate('/register?next=/user/analyze'))}
-          >
-            Analyze an article <ArrowRight size={14} />
-          </button>
           <button type="button" className="btn btn-ghost btn-sm px-3" onClick={replay}>
-            Replay animation
+            <RotateCcw size={14} className="me-1" /> Replay animation
           </button>
         </div>
       </div>
