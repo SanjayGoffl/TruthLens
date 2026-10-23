@@ -5,6 +5,7 @@ import PublicHeader from './components/layout/PublicHeader';
 import PublicFooter from './components/layout/PublicFooter';
 import DashboardLayout from './components/layout/DashboardLayout';
 import DashboardGuard from './routes/DashboardGuard';
+import RouteFade from './components/ui/RouteFade';
 import { ScrollToTop, useSectionScroll } from './utils/scroll';
 import Landing from './pages/landing/Landing';
 import LoginPage from './pages/auth/LoginPage';
@@ -39,12 +40,14 @@ function PublicLayout() {
     <>
       <PublicHeader />
       <main id="main-content">
+        <RouteFade>
         <Routes>
           <Route index element={<Landing />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </RouteFade>
       </main>
       <PublicFooter />
     </>
@@ -55,6 +58,7 @@ function UserArea() {
     <DashboardGuard role="USER">
       <DashboardLayout role="USER">
         <Suspense fallback={<PageLoader />}>
+        <RouteFade>
         <Routes>
           <Route index element={<Navigate to="/user/dashboard" replace />} />
           <Route path="dashboard" element={<UserDashboard />} />
@@ -68,6 +72,7 @@ function UserArea() {
           <Route path="result/:id" element={<ResultPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </RouteFade>
         </Suspense>
       </DashboardLayout>
     </DashboardGuard>
@@ -78,6 +83,7 @@ function AdminArea() {
     <DashboardGuard role="ADMIN">
       <DashboardLayout role="ADMIN">
         <Suspense fallback={<PageLoader />}>
+        <RouteFade>
         <Routes>
           <Route index element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />
@@ -90,6 +96,7 @@ function AdminArea() {
           <Route path="settings" element={<AdminSettings />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </RouteFade>
         </Suspense>
       </DashboardLayout>
     </DashboardGuard>
