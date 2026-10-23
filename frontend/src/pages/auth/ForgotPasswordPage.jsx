@@ -34,7 +34,7 @@ export default function ForgotPasswordPage() {
     return null;
   };
   return (
-    <AuthShell visual="reset">
+    <AuthShell visual="forgot">
       <h1 className="page-title mb-1">Forgot your password?</h1>
       <p className="page-subtitle mb-4">
         Enter the email address linked to your account and we will send you a one-time reset code. We never reveal whether an account exists.

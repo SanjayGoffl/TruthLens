@@ -14,7 +14,7 @@ export default function NotifSwitchRow({ id, icon: Icon, title, desc, checked, d
       </div>
       <div className="form-check form-switch flex-shrink-0 mt-1">
         <input id={id} className="form-check-input" type="checkbox" checked={checked} disabled={disabled} onChange={(e) => onChange(e.target.checked)} />
-        <label className="form-check-label d-none" htmlFor={id}>{title}</label>
+        <label className="visually-hidden" htmlFor={id}>{title}</label>
       </div>
     </div>
   );

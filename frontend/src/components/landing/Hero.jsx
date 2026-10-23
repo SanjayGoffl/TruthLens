@@ -96,14 +96,14 @@ function ResultPanel({ done, score }) {
 }
 function StageRail({ stage }) {
   return (
-    <div className="d-flex align-items-center gap-2" style={{ fontSize: 12, color: 'rgba(255,255,255,.85)' }}>
+    <div className="d-flex align-items-center gap-2" style={{ fontSize: 12, color: 'var(--text-2)' }}>
       <div className="d-flex gap-1" aria-hidden="true">
         {STAGES.map((s, i) => (
           <span
             key={s.label}
             style={{
               width: 26, height: 5, borderRadius: 3,
-              background: i === stage ? '#818CF8' : i < stage ? '#6366F1' : 'rgba(255,255,255,.25)',
+              background: i === stage ? 'var(--primary)' : i < stage ? '#6366F1' : 'var(--border)',
               transition: 'background .3s'
             }}
           />
@@ -118,6 +118,11 @@ function TruthLensStage() {
   const [playing, setPlaying] = useState(false);
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const replay = () => {
+    setPlaying(false);
+    setStage(0);
+    setTimeout(() => setPlaying(true), 80);
+  };
   useEffect(() => {
     if (!playing) return undefined;
     const timers = [];
@@ -138,9 +143,9 @@ function TruthLensStage() {
       <motion.div
         animate={{ opacity: playing ? 0 : 1, y: playing ? -6 : 0 }}
         className="mb-3 d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3"
-        style={{ background: 'rgba(255,255,255,.08)', border: '1px solid rgba(255,255,255,.18)', fontSize: 12.5, color: 'rgba(255,255,255,.9)' }}
+        style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', fontSize: 12.5, color: 'var(--text-2)' }}
       >
-        <Radar size={15} style={{ color: '#A5B4FC' }} />
+        <Radar size={15} style={{ color: 'var(--primary)' }} />
         Watch a credibility check unfold
       </motion.div>
       <div className="position-relative" style={{ width: '100%', maxWidth: 360 }}>
@@ -186,15 +191,24 @@ function TruthLensStage() {
       <div className="mt-4 d-flex flex-column align-items-center gap-3" style={{ width: '100%', maxWidth: 360 }}>
         <StageRail stage={stage} />
         <ResultPanel done={!playing && stage >= STAGES.length} score={87} />
-        <div className="d-flex flex-wrap gap-2 justify-content-center" style={{ fontSize: 12, color: 'rgba(255,255,255,.75)' }}>
-          <span className="d-inline-flex align-items-center gap-1"><ShieldCheck size={13} style={{ color: '#A5B4FC' }} /> 7 weighted factors</span>
-          <span className="d-inline-flex align-items-center gap-1"><Link2 size={13} style={{ color: '#A5B4FC' }} /> claim-level checks</span>
-          <span className="d-inline-flex align-items-center gap-1"><Sparkles size={13} style={{ color: '#A5B4FC' }} /> explainable score</span>
-          <span className="d-inline-flex align-items-center gap-1"><FileText size={13} style={{ color: '#A5B4FC' }} /> PDF reports</span>
+        <div className="d-flex flex-wrap gap-2 justify-content-center" style={{ fontSize: 12, color: 'var(--text-2)' }}>
+          <span className="d-inline-flex align-items-center gap-1"><ShieldCheck size={13} style={{ color: 'var(--primary)' }} /> 7 weighted factors</span>
+          <span className="d-inline-flex align-items-center gap-1"><Link2 size={13} style={{ color: 'var(--primary)' }} /> claim-level checks</span>
+          <span className="d-inline-flex align-items-center gap-1"><Sparkles size={13} style={{ color: 'var(--primary)' }} /> explainable score</span>
+          <span className="d-inline-flex align-items-center gap-1"><FileText size={13} style={{ color: 'var(--primary)' }} /> PDF reports</span>
         </div>
-        <button type="button" className="btn btn-light fw-bold" style={{ color: '#4338CA', borderRadius: 12 }} onClick={() => (isAuthenticated ? navigate('/user/analyze') : navigate('/register?next=/user/analyze'))}>
-          Replay animation <ArrowRight size={15} />
-        </button>
+        <div className="d-flex flex-wrap gap-2 justify-content-center">
+          <button
+            type="button"
+            className="btn btn-primary btn-sm px-3"
+            onClick={() => (isAuthenticated ? navigate('/user/analyze') : navigate('/register?next=/user/analyze'))}
+          >
+            Analyze an article <ArrowRight size={14} />
+          </button>
+          <button type="button" className="btn btn-ghost btn-sm px-3" onClick={replay}>
+            Replay animation
+          </button>
+        </div>
       </div>
     </div>
   );

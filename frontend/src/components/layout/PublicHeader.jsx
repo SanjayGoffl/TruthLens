@@ -17,6 +17,7 @@ const NAV = [
 export default function PublicHeader() {
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,7 +25,35 @@ export default function PublicHeader() {
     setOpen(false);
     setMenuOpen(false);
   }, [location.pathname]);
-  const activeSection = location.hash ? location.hash.slice(1) : location.pathname === '/' ? 'Home' : null;
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setActiveId(null);
+      return undefined;
+    }
+    const els = NAV.filter((n) => n.section)
+      .map((n) => document.getElementById(n.section))
+      .filter(Boolean);
+    if (!els.length) return undefined;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveId(visible.target.id);
+      },
+      { rootMargin: '-25% 0px -55% 0px', threshold: [0.05, 0.2, 0.5] }
+    );
+    els.forEach((el) => observer.observe(el));
+    const onScroll = () => {
+      if (window.scrollY < 220) setActiveId('home');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [location.pathname]);
+  const activeSection = location.pathname === '/' ? (activeId === 'home' || !activeId ? 'Home' : activeId) : null;
   return (
     <header className="position-sticky" style={{ top: 0, zIndex: 60, background: 'var(--bg)', borderBottom: '1px solid var(--border)', height: 'var(--header-h)' }}>
       <div className="d-flex align-items-center justify-content-between px-3 px-lg-4" style={{ height: '100%', maxWidth: 1280, margin: '0 auto' }}>

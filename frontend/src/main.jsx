@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { MotionConfig } from 'framer-motion';
+import './design-tokens.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import './premium.css';

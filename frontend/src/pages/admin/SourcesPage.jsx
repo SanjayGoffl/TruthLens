@@ -5,6 +5,7 @@ import api, { errorMessage } from '../../services/api';
 import EmptyState from '../../components/ui/EmptyState';
 import PaginationBar from '../../components/ui/PaginationBar';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
+import Dialog from '../../components/ui/Dialog';
 import { ButtonSpinner, SkeletonRows } from '../../components/ui/Loaders';
 import { classNames, colorForScore, sourceClassMeta } from '../../utils/credibility';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -179,10 +180,10 @@ export default function SourcesPage() {
         )}
         {!loading && items.length ? <div className="px-3 pb-3"><PaginationBar page={page} total={total} perPage={perPage} onChange={setPage} /></div> : null}
       </div>
-      {editor ? (
-        <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3" style={{ background: 'rgba(2,6,23,.6)', zIndex: 1000 }} role="dialog" aria-modal="true" aria-label={editor.id ? 'Edit source' : 'Add source'}>
-          <form className="card w-100" style={{ maxWidth: 640, maxHeight: '92vh', overflowY: 'auto' }} onSubmit={save}>
-            <div className="d-flex justify-content-between align-items-center px-4 py-3 border-bottom position-sticky top-0" style={{ background: 'var(--card)', borderColor: 'var(--border)' }}>
+      <Dialog open={Boolean(editor)} onClose={() => setEditor(null)} label={editor && editor.id ? 'Edit source' : 'Add source'} maxWidth={640} maxHeight="92vh">
+        {editor ? (
+          <form onSubmit={save}>
+            <div className="d-flex justify-content-between align-items-center px-4 py-3 border-bottom" style={{ borderColor: 'var(--border)', position: 'sticky', top: 0, background: 'var(--card)', zIndex: 2 }}>
               <h2 className="mb-0" style={{ fontSize: 16 }}>{editor.id ? 'Edit source' : 'Add a new source'}</h2>
               <button type="button" className="btn btn-ghost btn-sm" aria-label="Close" onClick={() => setEditor(null)}><X size={17} /></button>
             </div>
@@ -233,8 +234,8 @@ export default function SourcesPage() {
               </div>
             </div>
           </form>
-        </div>
-      ) : null}
+        ) : null}
+      </Dialog>
       <ConfirmDialog
         open={Boolean(deleteTarget)}
         title="Delete this source?"

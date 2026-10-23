@@ -5,6 +5,7 @@ import api, { errorMessage } from '../../services/api';
 import EmptyState from '../../components/ui/EmptyState';
 import PaginationBar from '../../components/ui/PaginationBar';
 import { SkeletonCards } from '../../components/ui/Loaders';
+import Dialog from '../../components/ui/Dialog';
 import VerdictBadge from '../../components/ui/VerdictBadge';
 import { classNames, colorForScore, fmtDate, sourceClassMeta } from '../../utils/credibility';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -115,13 +116,13 @@ export default function SourcesPage() {
       <div className="text-muted-2 mt-3" style={{ fontSize: 12.5 }}>
         Reliability scores and classifications in this registry are informational — they reflect records, editorial conventions and analysis outcomes, and are never presented as an objective measure of a source's truthfulness.
       </div>
-      {detail ? (
-        <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3" style={{ background: 'rgba(2,6,23,.6)', zIndex: 1000 }} role="dialog" aria-modal="true" aria-label="Source details">
-          <div className="card w-100" style={{ maxWidth: 720, maxHeight: '88vh', overflowY: 'auto' }}>
-            <div className="d-flex justify-content-between align-items-center px-4 py-3 border-bottom position-sticky top-0" style={{ background: 'var(--card)', borderColor: 'var(--border)', zIndex: 2 }}>
-              <h2 className="mb-0" style={{ fontSize: 16.5 }}>Source details</h2>
-              <button type="button" className="btn btn-ghost btn-sm" aria-label="Close" onClick={() => setDetail(null)}><X size={17} /></button>
-            </div>
+      <Dialog open={Boolean(detail)} onClose={() => setDetail(null)} label="Source details" maxWidth={720} maxHeight="88vh">
+        {detail ? (
+          <>
+        <div className="d-flex justify-content-between align-items-center px-4 py-3 border-bottom" style={{ background: 'var(--card)', borderColor: 'var(--border)', position: 'sticky', top: 0, zIndex: 2 }}>
+          <h2 className="mb-0" style={{ fontSize: 16.5 }}>Source details</h2>
+          <button type="button" className="btn btn-ghost btn-sm" aria-label="Close" onClick={() => setDetail(null)}><X size={17} /></button>
+        </div>
             <div className="p-4">
               {detailBusy || !detail.source ? (
                 <div className="d-flex justify-content-center py-5"><div className="spinner-border text-success" role="status" /></div>
@@ -183,9 +184,9 @@ export default function SourcesPage() {
                 </>
               )}
             </div>
-          </div>
-        </div>
-      ) : null}
+          </>
+        ) : null}
+      </Dialog>
     </div>
   );
 }

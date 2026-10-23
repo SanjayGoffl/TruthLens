@@ -6,6 +6,7 @@ import VerdictBadge from '../../components/ui/VerdictBadge';
 import EmptyState from '../../components/ui/EmptyState';
 import PaginationBar from '../../components/ui/PaginationBar';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
+import Dialog from '../../components/ui/Dialog';
 import { SkeletonRows } from '../../components/ui/Loaders';
 import { classNames, colorForVerdict, fmtDate, initials } from '../../utils/credibility';
 import { useAuth } from '../../context/AuthContext';
@@ -20,7 +21,7 @@ export default function UsersPage() {
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-    const [actionTarget, setActionTarget] = useState(null);
+  const [actionTarget, setActionTarget] = useState(null);
   const [actionBusy, setActionBusy] = useState(false);
   const [detailId, setDetailId] = useState(null);
   const debounced = useDebounce(search);
@@ -135,7 +136,7 @@ export default function UsersPage() {
                         <div className="d-flex gap-1 justify-content-end flex-wrap">
                           <button type="button" className="btn btn-ghost btn-sm" title="View details" aria-label="View user details" onClick={() => setDetailId(u._id)}><Eye size={15} /></button>
                           {!isMe ? (
-                            <button type="button" className="btn btn-ghost btn-sm" title={u.isActive ? 'Deactivate user' : 'Activate user'} aria-label={u.isActive ? 'Deactivate user' : 'Activate user'} onClick={() => setActionTarget({ _id: u._id, name: u.name, kind: 'status' })}>
+                            <button type="button" className="btn btn-ghost btn-sm" title={u.isActive ? 'Deactivate user' : 'Activate user'} aria-label={u.isActive ? 'Deactivate user' : 'Activate user'} onClick={() => setActionTarget({ _id: u._id, name: u.name, isActive: u.isActive, kind: 'status' })}>
                               {u.isActive ? <Ban size={15} className="text-warning" /> : <CheckCircle2 size={15} className="text-success" />}
                             </button>
                           ) : null}
@@ -190,7 +191,6 @@ function UserDetailModal({ userId, onClose, onChanged }) {
       .catch((err) => toast.error(errorMessage(err, 'User details could not be loaded.')));
     return undefined;
   }, [userId]);
-  if (!userId) return null;
   const doToggle = async (target) => {
     setBusyStatus(true);
     try {
@@ -206,13 +206,12 @@ function UserDetailModal({ userId, onClose, onChanged }) {
     }
   };
   return (
-    <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3" style={{ background: 'rgba(2,6,23,.6)', zIndex: 1000 }} role="dialog" aria-modal="true" aria-label="User details">
-      <div className="card w-100" style={{ maxWidth: 760, maxHeight: '90vh', overflowY: 'auto' }}>
-        <div className="d-flex justify-content-between align-items-center px-4 py-3 border-bottom position-sticky top-0" style={{ background: 'var(--card)', borderColor: 'var(--border)' }}>
-          <h2 className="mb-0" style={{ fontSize: 16 }}>User details</h2>
-          <button type="button" className="btn btn-ghost btn-sm" aria-label="Close" onClick={onClose}><X size={17} /></button>
-        </div>
-        <div className="p-4">
+    <Dialog open={Boolean(userId)} onClose={onClose} label="User details" maxWidth={760}>
+      <div className="d-flex justify-content-between align-items-center px-4 py-3 border-bottom" style={{ borderColor: 'var(--border)', position: 'sticky', top: 0, background: 'var(--card)', zIndex: 2 }}>
+        <h2 className="mb-0" style={{ fontSize: 16 }}>User details</h2>
+        <button type="button" className="btn btn-ghost btn-sm" aria-label="Close" onClick={onClose}><X size={17} /></button>
+      </div>
+      <div className="p-4">
           {!data ? (
             <div className="d-flex justify-content-center py-5"><div className="spinner-border text-success" role="status" /></div>
           ) : (
@@ -266,8 +265,7 @@ function UserDetailModal({ userId, onClose, onChanged }) {
               )}
             </>
           )}
-        </div>
       </div>
-    </div>
+    </Dialog>
   );
 }

@@ -1,21 +1,18 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { jsPDF } from 'jspdf';
+import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { ArrowLeft, Download, ShieldCheck } from 'lucide-react';
-import Logo from '../ui/Logo';
-import ThemeToggle from '../ui/ThemeToggle';
 export default function LegalLayout({ title, updated, sections, fileName }) {
-  const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
-  const downloadPdf = () => {
+  const downloadPdf = async () => {
     setBusy(true);
     try {
+      const { jsPDF } = await import('jspdf');
       const doc = new jsPDF({ unit: 'pt', format: 'a4' });
       const margin = 56;
       const width = doc.internal.pageSize.getWidth();
       let y = 64;
-      doc.setFillColor(4, 120, 87);
+      doc.setFillColor(79, 70, 229);
       doc.rect(0, 0, width, 96, 'F');
       doc.setTextColor(255, 255, 255);
       doc.setFont('helvetica', 'bold');
@@ -77,14 +74,10 @@ export default function LegalLayout({ title, updated, sections, fileName }) {
     }
   };
   return (
-    <div className="auth-bg" style={{ minHeight: '100vh' }}>
-      <div className="d-flex justify-content-between align-items-center px-3 px-md-4 py-3">
-        <Logo />
-        <ThemeToggle />
-      </div>
-      <div className="d-flex flex-column align-items-center px-3 px-md-4 pb-5">
+    <div style={{ background: 'var(--bg)', minHeight: '70vh' }}>
+      <div className="d-flex flex-column align-items-center px-3 px-md-4 py-4 py-md-5">
         <div className="w-100" style={{ maxWidth: 820 }}>
-          <div className="card mt-2 overflow-hidden">
+          <div className="card overflow-hidden">
             <div className="p-4 p-md-5 text-center" style={{ background: 'linear-gradient(120deg, rgba(99,102,241,.14), transparent 60%)' }}>
               <span className="d-inline-grid place-items-center rounded-3 mx-auto mb-3" style={{ width: 56, height: 56, background: 'var(--primary)', color: '#fff' }}>
                 <ShieldCheck size={28} />

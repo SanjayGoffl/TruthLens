@@ -1,9 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { FileText, Gauge, Scale, SearchCheck, ShieldCheck } from 'lucide-react';
+import { FileText, Gauge, Scale, ShieldCheck } from 'lucide-react';
 import Logo from '../ui/Logo';
 import { goSection } from '../../utils/scroll';
+import { useAuth } from '../../context/AuthContext';
 export default function PublicFooter() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const appPath = (path) => (isAuthenticated ? path : `/login?next=${encodeURIComponent(path)}`);
   return (
     <footer style={{ background: 'var(--bg-2)', borderTop: '1px solid var(--border)' }}>
       <div className="py-5 px-3 px-lg-4" style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -31,8 +34,8 @@ export default function PublicFooter() {
           <div className="col-6 col-md-3 col-lg-2">
             <h6 className="mb-3" style={{ fontSize: 12.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>Product</h6>
             <ul className="list-unstyled d-grid gap-2" style={{ fontSize: 14 }}>
-              <li><Link to="/user/analyze" className="link-plain">Analyze an article</Link></li>
-              <li><Link to="/user/sources" className="link-plain">Source explorer</Link></li>
+              <li><Link to={appPath('/user/analyze')} className="link-plain">Analyze an article</Link></li>
+              <li><Link to={appPath('/user/sources')} className="link-plain">Source explorer</Link></li>
               <li><Link to="/login" className="link-plain">Log in</Link></li>
               <li><Link to="/register" className="link-plain">Create account</Link></li>
             </ul>

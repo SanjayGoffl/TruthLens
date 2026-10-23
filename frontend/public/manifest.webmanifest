@@ -18,5 +18,5 @@
     { "name": "Analyze an article", "short_name": "Analyze", "url": "/user/analyze", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
     { "name": "History", "short_name": "History", "url": "/user/history", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
   ],
-  "share_target": { "action": "/user/analyze", "method": "GET", "params": { "title": "title", "text": "text", "url": "url" } }
+  "share_target": { "action": "/user/analyze", "method": "GET", "enctype": "application/x-www-form-urlencoded", "params": { "title": "title", "text": "text", "url": "url" } }
 }

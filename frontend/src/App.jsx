@@ -38,7 +38,7 @@ function PublicLayout() {
   return (
     <>
       <PublicHeader />
-      <main>
+      <main id="main-content">
         <Routes>
           <Route index element={<Landing />} />
           <Route path="/terms" element={<TermsPage />} />
