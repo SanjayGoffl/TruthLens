@@ -7,25 +7,29 @@ import './design-tokens.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import './premium.css';
+import './shadcn.css';
 import App from './App.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
+import { TooltipProvider } from './components/ui/shadcn/tooltip';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <MotionConfig reducedMotion="user">
         <ThemeProvider>
           <AuthProvider>
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                className: 'toast-inline',
-                style: { maxWidth: 420 },
-                success: { iconTheme: { primary: '#6366F1', secondary: '#ffffff' } },
-                error: { iconTheme: { primary: '#EF4444', secondary: '#ffffff' }, duration: 5200 }
-              }}
-            />
-            <App />
+            <TooltipProvider delayDuration={280} skipDelayDuration={260}>
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  className: 'toast-inline',
+                  style: { maxWidth: 420 },
+                  success: { iconTheme: { primary: '#6366F1', secondary: '#ffffff' } },
+                  error: { iconTheme: { primary: '#EF4444', secondary: '#ffffff' }, duration: 5200 }
+                }}
+              />
+              <App />
+            </TooltipProvider>
           </AuthProvider>
         </ThemeProvider>
       </MotionConfig>

@@ -9,6 +9,11 @@ import Logo from '../ui/Logo';
 import InstallApp from '../ui/InstallApp';
 import ThemeToggle from '../ui/ThemeToggle';
 import { openCommandPalette } from '../ui/CommandPalette';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/shadcn/tooltip';
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
+  DropdownMenuSeparator, DropdownMenuTrigger
+} from '../ui/shadcn/dropdown-menu';
 import { useAuth } from '../../context/AuthContext';
 import { classNames, initials } from '../../utils/credibility';
 import { onSocketEvent, offSocketEvent } from '../../services/socket';
@@ -98,7 +103,6 @@ export default function DashboardLayout({ role, children }) {
   const { user, logout, refreshProfile, stats } = useAuth();
   const navigate = useNavigate();
   const [drawer, setDrawer] = useState(false);
-  const [profileMenu, setProfileMenu] = useState(false);
   const onSocket = useCallback(
     (payload) => {
       if (!payload || !payload.code || !payload.title) return;
@@ -177,55 +181,78 @@ export default function DashboardLayout({ role, children }) {
               <Menu size={19} />
             </button>
             <div className="d-flex align-items-center gap-2 ms-auto ms-lg-0">
-              <button
-                type="button"
-                className="btn d-none d-md-inline-flex align-items-center gap-2"
-                onClick={openCommandPalette}
-                aria-label="Search pages and actions (Ctrl+K)"
-                style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', borderRadius: 10, height: 36, padding: '0 0.6rem', color: 'var(--muted)', fontSize: 12.5, fontWeight: 550 }}
-              >
-                <Search size={14} />
-                <span>Search</span>
-                <kbd>Ctrl K</kbd>
-              </button>
-              <button
-                type="button"
-                className="btn btn-ghost d-md-none p-2"
-                onClick={openCommandPalette}
-                aria-label="Search pages and actions"
-                style={{ width: 40, height: 40 }}
-              >
-                <Search size={18} />
-              </button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    className="btn d-none d-md-inline-flex align-items-center gap-2"
+                    onClick={openCommandPalette}
+                    aria-label="Search pages and actions (Ctrl+K)"
+                    style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', borderRadius: 10, height: 36, padding: '0 0.6rem', color: 'var(--muted)', fontSize: 12.5, fontWeight: 550 }}
+                  >
+                    <Search size={14} />
+                    <span>Search</span>
+                    <kbd>Ctrl K</kbd>
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">Search pages, sections and actions</TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    className="btn btn-ghost d-md-none p-2"
+                    onClick={openCommandPalette}
+                    aria-label="Search pages and actions"
+                    style={{ width: 40, height: 40 }}
+                  >
+                    <Search size={18} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">Search</TooltipContent>
+              </Tooltip>
               <ThemeToggle />
-              <button type="button" className="btn btn-ghost position-relative p-2" style={{ width: 40, height: 40 }} aria-label="Notifications" onClick={() => navigate(role === 'ADMIN' ? '/admin/notifications' : '/user/notifications')}>
-                <Bell size={18} />
-                {unread > 0 ? (
-                  <span className="position-absolute top-0 end-0 badge rounded-pill text-white" style={{ background: 'var(--danger)', fontSize: 9.5, minWidth: 17 }}>
-                    {unread > 9 ? '9+' : unread}
-                  </span>
-                ) : null}
-              </button>
-              <div className="position-relative">
-                <button type="button" className="btn btn-ghost d-inline-flex align-items-center gap-2 py-1 pe-2 ps-1" aria-expanded={profileMenu} onClick={() => setProfileMenu((v) => !v)}>
-                  {user.profileImage ? (
-                    <img src={user.profileImage} alt="" className="avatar avatar-sm" />
-                  ) : (
-                    <span className="avatar avatar-sm" aria-hidden="true">{initials(user.name)}</span>
-                  )}
-                  <ChevronDown size={14} className="text-muted-2 d-none d-md-block" />
-                </button>
-                {profileMenu ? (
-                  <div className="position-absolute end-0 mt-2 card p-1" style={{ width: 210, zIndex: 70 }} role="menu">
-                    <div className="px-3 py-2 border-bottom d-grid">
-                      <span className="fw-bold text-main text-truncate" style={{ fontSize: 13.5 }}>{user.name}</span>
-                      <span className="text-muted-2 text-xs text-truncate">{user.email}</span>
-                    </div>
-                    <button type="button" className="dropdown-item rounded-3 py-2" onClick={() => { setProfileMenu(false); navigate('/user/settings'); }}>Settings</button>
-                    <button type="button" className="dropdown-item rounded-3 py-2 text-danger" onClick={() => { setProfileMenu(false); logout(); }}>Log out</button>
-                  </div>
-                ) : null}
-              </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button type="button" className="btn btn-ghost position-relative p-2" style={{ width: 40, height: 40 }} aria-label="Notifications" onClick={() => navigate(role === 'ADMIN' ? '/admin/notifications' : '/user/notifications')}>
+                    <Bell size={18} />
+                    {unread > 0 ? (
+                      <span className="position-absolute top-0 end-0 badge rounded-pill text-white" style={{ background: 'var(--danger)', fontSize: 9.5, minWidth: 17 }}>
+                        {unread > 9 ? '9+' : unread}
+                      </span>
+                    ) : null}
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">Notifications</TooltipContent>
+              </Tooltip>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button type="button" className="btn btn-ghost account-trigger d-inline-flex align-items-center gap-2 py-1 pe-2 ps-1" aria-label="Account menu">
+                    {user.profileImage ? (
+                      <img src={user.profileImage} alt="" className="avatar avatar-sm" />
+                    ) : (
+                      <span className="avatar avatar-sm" aria-hidden="true">{initials(user.name)}</span>
+                    )}
+                    <ChevronDown size={14} className="text-muted-2 d-none d-md-block account-chevron" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="tw-w-[224px]">
+                  <DropdownMenuLabel className="tw-pb-2">
+                    <span className="tw-block tw-text-[13.5px] tw-font-bold tw-text-foreground">{user.name}</span>
+                    <span className="tw-block tw-truncate tw-text-[11.5px] tw-font-normal tw-text-muted-foreground">{user.email}</span>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onSelect={() => navigate('/user/settings')}>
+                    <Settings />
+                    Settings
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="tw-text-destructive focus:tw-text-destructive" onSelect={() => logout()}>
+                    <LogOut />
+                    Log Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
           {role === 'USER' ? <InstallApp /> : null}

@@ -19,6 +19,7 @@
   --card: #ffffff;
   --elevated: #ffffff;
   --border: #e3e8ee;
+  --surface-hover: #eef0fb;
 
   /* Text */
   --text: #111827;
@@ -69,6 +70,7 @@
   --card: #11152b;
   --elevated: #181d38;
   --border: #252b4a;
+  --surface-hover: #1c2242;
 
   --text: #f1f5f9;
   --text-2: #cbd5e1;

@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
-import { ClipboardPaste, Link2, ScanSearch, ShieldCheck, TrendingUp } from 'lucide-react';
+import { BadgeCheck, ClipboardPaste, Gauge, ScanSearch } from 'lucide-react';
+import Icon from '../ui/Icon';
 const STEPS = [
-  { icon: Link2, num: '01', title: 'Submit', text: 'Paste an article URL or the full text. No extensions, no setup.' },
+  { icon: ClipboardPaste, num: '01', title: 'Submit', text: 'Paste an article URL or the full text. No extensions, no setup.' },
   { icon: ScanSearch, num: '02', title: 'Analyze', text: 'TruthLens AI reads the source, structure, language, claims and publication details.' },
-  { icon: ShieldCheck, num: '03', title: 'Verify', text: 'We check the important claims against available supporting sources and flag what needs a second look.' },
-  { icon: TrendingUp, num: '04', title: 'Understand', text: 'You get a credibility score and a factor-by-factor explanation you can read in minutes.' }
+  { icon: BadgeCheck, num: '03', title: 'Verify', text: 'We check the important claims against available supporting sources and flag what needs a second look.' },
+  { icon: Gauge, num: '04', title: 'Understand', text: 'You get a credibility score and a factor-by-factor explanation you can read in minutes.' }
 ];
 export default function HowItWorks() {
   return (
@@ -29,8 +30,8 @@ export default function HowItWorks() {
             >
               <div className="card card-hover h-100 position-relative p-4">
                 <div className="d-flex justify-content-between align-items-start mb-3">
-                  <div className="d-inline-grid place-items-center rounded-3" style={{ width: 48, height: 48, background: 'var(--bg-2)', color: 'var(--primary)' }}>
-                    <step.icon size={22} />
+                  <div className="step-icon d-inline-grid place-items-center rounded-3" style={{ width: 48, height: 48, background: 'var(--bg-2)', color: 'var(--primary)' }}>
+                    <Icon icon={step.icon} size={22} />
                   </div>
                   <span className="font-mono fw-bold" style={{ fontSize: 26, color: 'var(--border)', opacity: 0.9 }}>{step.num}</span>
                 </div>

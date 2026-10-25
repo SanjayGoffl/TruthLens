@@ -1,0 +1,12 @@
+/* shadcn/ui layer — Tailwind is prefixed (`tw-`) and preflight is disabled so
+   it can live beside Bootstrap without shifting the existing design. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .tw-scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--muted) 35%, transparent) transparent;
+  }
+}

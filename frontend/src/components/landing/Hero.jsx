@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileText, Link2, Radar, RotateCcw, ScanSearch, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, Building2, FileSearch, FileText, Link2, Radar, RotateCcw, Scale, ScanSearch, ShieldCheck, Sparkles, TriangleAlert } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 const STAGES = [
   { label: 'Extracting the article', seconds: 1.2 },
@@ -248,10 +248,10 @@ export default function Hero() {
               </a>
             </motion.div>
             <motion.ul initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }} className="list-unstyled d-flex flex-wrap gap-2 mb-0" style={{ fontSize: 12.5 }}>
-              <li className="chip chip-green pill"><ShieldCheck size={12} /> Source Reliability</li>
-              <li className="chip chip-green pill"><ShieldCheck size={12} /> Claim Verification</li>
-              <li className="chip chip-green pill"><ShieldCheck size={12} /> Sensationalism Detection</li>
-              <li className="chip chip-green pill"><ShieldCheck size={12} /> Transparent Scoring</li>
+              <li className="chip chip-green pill"><Building2 size={12} /> Source Reliability</li>
+              <li className="chip chip-green pill"><FileSearch size={12} /> Claim Verification</li>
+              <li className="chip chip-green pill"><TriangleAlert size={12} /> Sensationalism Detection</li>
+              <li className="chip chip-green pill"><Scale size={12} /> Transparent Scoring</li>
             </motion.ul>
           </div>
           <div className="col-lg-6 d-none d-lg-block">

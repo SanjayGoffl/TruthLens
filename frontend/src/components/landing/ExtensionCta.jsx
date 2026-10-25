@@ -1,4 +1,4 @@
-import { Chrome, ClipboardPaste, MousePointerClick } from 'lucide-react';
+import { Puzzle, ClipboardPaste, MousePointerClick } from 'lucide-react';
 
 export default function ExtensionCta() {
   return (
@@ -7,7 +7,7 @@ export default function ExtensionCta() {
         <div className="ext-card">
           <div className="row align-items-center g-4 position-relative" style={{ zIndex: 1 }}>
             <div className="col-lg-7">
-              <span className="chip chip-teal pill mb-3"><Chrome size={13} /> Browser Extension</span>
+              <span className="chip chip-teal pill mb-3"><Puzzle size={13} /> Browser Extension</span>
               <h2 id="ext-title" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>Check Any Article Without Leaving the Page</h2>
               <p style={{ color: '#C7D2FE', maxWidth: 520 }} className="mb-0">
                 Right-click a page, link or selected paragraph and send it straight to TruthLens AI. Review it in the analyzer and get the full report in seconds.

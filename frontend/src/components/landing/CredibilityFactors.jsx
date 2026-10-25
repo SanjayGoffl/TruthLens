@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Building2, CheckCircle2, FileCheck2, Newspaper, Scale, TriangleAlert } from 'lucide-react';
+import Icon from '../ui/Icon';
 const FACTORS = [
   { icon: Building2, title: 'Source Reliability', text: 'We check who publishes the article, the domain’s history and how openly the publisher identifies itself.' },
   { icon: Scale, title: 'Evidence Quality', text: 'We look for cited sources, named experts, data and verifiable material behind each claim.' },
@@ -30,8 +31,8 @@ export default function CredibilityFactors() {
               transition={{ duration: 0.5, delay: (i % 3) * 0.1, ease: 'easeOut' }}
             >
               <div className="card card-hover h-100 p-4">
-                <div className="d-inline-grid place-items-center rounded-3 mb-3" style={{ width: 46, height: 46, background: 'var(--bg-2)', color: 'var(--primary)' }}>
-                  <f.icon size={21} />
+                <div className="feature-icon d-inline-grid place-items-center rounded-3 mb-3" style={{ width: 46, height: 46, background: 'var(--bg-2)', color: 'var(--primary)' }}>
+                  <Icon icon={f.icon} size={21} />
                 </div>
                 <h3 style={{ fontSize: 16 }}>{f.title}</h3>
                 <p className="text-muted-2 mb-0" style={{ fontSize: 13.5 }}>{f.text}</p>

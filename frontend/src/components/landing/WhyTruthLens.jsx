@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Bot, Bookmark, Download, FileCheck2, History, ListChecks, SearchCheck, ShieldAlert } from 'lucide-react';
+import Icon from '../ui/Icon';
 const REASONS = [
   { icon: Bot, title: 'AI-Assisted Analysis', text: 'Gemini reads the source, structure, language and claims, then a deterministic scoring engine turns that into a score.' },
   { icon: ListChecks, title: 'Transparent Scoring', text: 'You can see the weights behind all six factors: Source 22%, Evidence 22%, Claims 22%, Transparency 13%, Writing 8% and Sensationalism 13%.' },
@@ -42,8 +43,8 @@ export default function WhyTruthLens() {
                   transition={{ duration: 0.45, delay: (i % 4) * 0.08 }}
                 >
                   <div className="card card-hover h-100 p-3 d-flex gap-3 align-items-start">
-                    <span className="d-inline-grid place-items-center rounded-3 flex-shrink-0" style={{ width: 38, height: 38, background: 'var(--bg-2)', color: 'var(--primary)' }}>
-                      <r.icon size={18} />
+                    <span className="feature-icon d-inline-grid place-items-center rounded-3 flex-shrink-0" style={{ width: 38, height: 38, background: 'var(--bg-2)', color: 'var(--primary)' }}>
+                      <Icon icon={r.icon} size={18} />
                     </span>
                     <div>
                       <h3 className="fw-bold" style={{ fontSize: 13.5 }}>{r.title}</h3>
