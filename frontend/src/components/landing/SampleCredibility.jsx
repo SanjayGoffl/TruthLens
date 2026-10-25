@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ChevronDown, Info } from 'lucide-react';
+import CountUp from '../ui/CountUp';
 const SCALE = [
   { range: '80–100', label: 'Highly Credible', color: '#16A34A', note: 'Strong source signals, evidence and consistent claims.' },
   { range: '65–79', label: 'Mostly Credible', color: '#4F46E5', note: 'Generally sound with minor gaps or caveats.' },
@@ -69,7 +70,7 @@ export default function SampleCredibility() {
                     />
                   </svg>
                   <div className="position-absolute top-50 start-50 translate-middle text-center">
-                    <div style={{ fontSize: 26, fontWeight: 800, fontFamily: 'var(--font-mono)' }}>87</div>
+                    <div style={{ fontSize: 26, fontWeight: 800, fontFamily: 'var(--font-mono)' }}><CountUp value={87} duration={1.25} /></div>
                     <div style={{ fontSize: 10, color: 'var(--muted)' }}>/ 100</div>
                   </div>
                 </div>
@@ -91,7 +92,7 @@ export default function SampleCredibility() {
                     <div className="col-md-6" key={f.label}>
                       <div className="d-flex justify-content-between align-items-center mb-1">
                         <span className="text-small fw-semibold">{f.label}</span>
-                        <span className="font-mono text-small fw-bold" style={{ color: f.score >= 80 ? '#16A34A' : f.score >= 65 ? '#4F46E5' : '#D97706' }}>{f.score}/100</span>
+                        <span className="font-mono text-small fw-bold" style={{ color: f.score >= 80 ? '#16A34A' : f.score >= 65 ? '#4F46E5' : '#D97706' }}><CountUp value={f.score} duration={0.9} />/100</span>
                       </div>
                       <div className="progress" style={{ height: 6 }}>
                         <motion.div

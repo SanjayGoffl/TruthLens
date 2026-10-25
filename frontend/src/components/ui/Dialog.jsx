@@ -13,6 +13,7 @@ export default function Dialog({
   maxHeight = '90vh',
   align = 'center',
   className = '',
+  focusPanel = true,
   children
 }) {
   const panelRef = useRef(null);
@@ -29,7 +30,9 @@ export default function Dialog({
     document.addEventListener('keydown', onKey);
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    const timer = window.setTimeout(() => panelRef.current?.focus?.(), 20);
+    const timer = window.setTimeout(() => {
+      if (focusPanel) panelRef.current?.focus?.();
+    }, 20);
     return () => {
       document.removeEventListener('keydown', onKey);
       document.body.style.overflow = previousOverflow;

@@ -6,6 +6,8 @@ import PublicFooter from './components/layout/PublicFooter';
 import DashboardLayout from './components/layout/DashboardLayout';
 import DashboardGuard from './routes/DashboardGuard';
 import RouteFade from './components/ui/RouteFade';
+import ScrollProgress from './components/ui/ScrollProgress';
+import CommandPalette from './components/ui/CommandPalette';
 import { ScrollToTop, useSectionScroll } from './utils/scroll';
 import Landing from './pages/landing/Landing';
 import LoginPage from './pages/auth/LoginPage';
@@ -107,6 +109,8 @@ export default function App() {
   return (
     <>
       <ScrollToTop />
+      <ScrollProgress />
+      <CommandPalette />
       <Routes>
         <Route path="/*" element={<PublicLayout />} />
         <Route path="/report/:token" element={<Suspense fallback={<PageLoader />}><SharedReportPage /></Suspense>} />

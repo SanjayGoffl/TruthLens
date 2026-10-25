@@ -8,6 +8,7 @@ import {
 import Logo from '../ui/Logo';
 import InstallApp from '../ui/InstallApp';
 import ThemeToggle from '../ui/ThemeToggle';
+import { openCommandPalette } from '../ui/CommandPalette';
 import { useAuth } from '../../context/AuthContext';
 import { classNames, initials } from '../../utils/credibility';
 import { onSocketEvent, offSocketEvent } from '../../services/socket';
@@ -176,6 +177,26 @@ export default function DashboardLayout({ role, children }) {
               <Menu size={19} />
             </button>
             <div className="d-flex align-items-center gap-2 ms-auto ms-lg-0">
+              <button
+                type="button"
+                className="btn d-none d-md-inline-flex align-items-center gap-2"
+                onClick={openCommandPalette}
+                aria-label="Search pages and actions (Ctrl+K)"
+                style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', borderRadius: 10, height: 36, padding: '0 0.6rem', color: 'var(--muted)', fontSize: 12.5, fontWeight: 550 }}
+              >
+                <Search size={14} />
+                <span>Search</span>
+                <kbd>Ctrl K</kbd>
+              </button>
+              <button
+                type="button"
+                className="btn btn-ghost d-md-none p-2"
+                onClick={openCommandPalette}
+                aria-label="Search pages and actions"
+                style={{ width: 40, height: 40 }}
+              >
+                <Search size={18} />
+              </button>
               <ThemeToggle />
               <button type="button" className="btn btn-ghost position-relative p-2" style={{ width: 40, height: 40 }} aria-label="Notifications" onClick={() => navigate(role === 'ADMIN' ? '/admin/notifications' : '/user/notifications')}>
                 <Bell size={18} />

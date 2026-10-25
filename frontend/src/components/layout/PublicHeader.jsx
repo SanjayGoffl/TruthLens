@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ChevronDown, LayoutDashboard, LogOut, Menu, User as UserIcon, X } from 'lucide-react';
+import { ChevronDown, LayoutDashboard, LogOut, Menu, Search, User as UserIcon, X } from 'lucide-react';
 import Logo from '../ui/Logo';
 import ThemeToggle from '../ui/ThemeToggle';
 import { useAuth } from '../../context/AuthContext';
 import { classNames, initials } from '../../utils/credibility';
 import { goSection } from '../../utils/scroll';
+import { openCommandPalette } from '../ui/CommandPalette';
 const NAV = [
   { label: 'Home', section: null },
   { label: 'How It Works', section: 'how-it-works' },
@@ -18,6 +19,7 @@ export default function PublicHeader() {
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState(null);
+  const [scrolled, setScrolled] = useState(false);
   const menuRef = useRef(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -34,6 +36,12 @@ export default function PublicHeader() {
     document.addEventListener('mousedown', onDown);
     return () => document.removeEventListener('mousedown', onDown);
   }, [menuOpen]);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
   useEffect(() => {
     if (location.pathname !== '/') {
       setActiveId(null);
@@ -64,7 +72,7 @@ export default function PublicHeader() {
   }, [location.pathname]);
   const activeSection = location.pathname === '/' ? (activeId === 'home' || !activeId ? 'Home' : activeId) : null;
   return (
-    <header className="position-sticky" style={{ top: 0, zIndex: 60, background: 'var(--bg)', borderBottom: '1px solid var(--border)', height: 'var(--header-h)' }}>
+    <header className={classNames('position-sticky site-header', scrolled && 'is-scrolled')} style={{ top: 0, zIndex: 60, background: 'var(--bg)', borderBottom: '1px solid var(--border)', height: 'var(--header-h)' }}>
       <div className="d-flex align-items-center justify-content-between px-3 px-lg-4" style={{ height: '100%', maxWidth: 1280, margin: '0 auto' }}>
         <Logo />
         <nav className="d-none d-lg-flex align-items-center gap-1" aria-label="Main navigation">
@@ -87,6 +95,26 @@ export default function PublicHeader() {
           )}
         </nav>
         <div className="d-flex align-items-center gap-2">
+          <button
+            type="button"
+            onClick={openCommandPalette}
+            className="btn d-none d-md-inline-flex align-items-center gap-2"
+            aria-label="Search the site (Ctrl+K)"
+            style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', borderRadius: 10, height: 36, padding: '0 0.6rem', color: 'var(--muted)', fontSize: 12.5, fontWeight: 550 }}
+          >
+            <Search size={14} />
+            <span>Search</span>
+            <kbd>Ctrl K</kbd>
+          </button>
+          <button
+            type="button"
+            onClick={openCommandPalette}
+            className="btn btn-ghost d-md-none p-2"
+            aria-label="Search the site"
+            style={{ width: 40, height: 40 }}
+          >
+            <Search size={18} />
+          </button>
           <ThemeToggle />
           {user ? (
             <div className="position-relative d-none d-sm-block" ref={menuRef}>
