@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
 import { Bot, Bookmark, Download, FileCheck2, History, ListChecks, SearchCheck, ShieldAlert } from 'lucide-react';
 const REASONS = [
-  { icon: Bot, title: 'AI-assisted analysis', text: 'Gemini-powered reading of the source, structure, language and claims — with a deterministic scoring engine on top.' },
-  { icon: ListChecks, title: 'Transparent scoring', text: 'Weights are public across six factors: Source 22%, Evidence 22%, Claims 22%, Transparency 13%, Writing 8% and Sensationalism 13%.' },
-  { icon: FileCheck2, title: 'Claim-level assessment', text: 'Supported, partially supported, needs verification, contradicted or unsupported — each big claim gets its own verdict.' },
-  { icon: SearchCheck, title: 'Source analysis', text: 'Publisher identity, domain, author, date and internal registry history are weighed before reliability is inferred.' },
-  { icon: ShieldAlert, title: 'Suspicious content detection', text: 'Clickbait, fear language, unsupported superlatives and contradictions are surfaced statement by statement.' },
-  { icon: History, title: 'Analysis history', text: 'Every analysis is stored privately on your account, searchable and filterable, with trends on your dashboard.' },
-  { icon: Download, title: 'Downloadable reports', text: 'One-click branded PDF reports with the score breakdown, claims, sources and the AI explanation.' },
-  { icon: Bookmark, title: 'Saved reports', text: 'Pin the analyses that matter and revisit them any time from your saved reports page.' }
+  { icon: Bot, title: 'AI-Assisted Analysis', text: 'Gemini reads the source, structure, language and claims, then a deterministic scoring engine turns that into a score.' },
+  { icon: ListChecks, title: 'Transparent Scoring', text: 'You can see the weights behind all six factors: Source 22%, Evidence 22%, Claims 22%, Transparency 13%, Writing 8% and Sensationalism 13%.' },
+  { icon: FileCheck2, title: 'Claim-Level Assessment', text: 'Every major claim gets its own verdict: supported, partially supported, needs verification, contradicted or unsupported.' },
+  { icon: SearchCheck, title: 'Source Analysis', text: 'We weigh publisher identity, domain, author, date and internal registry history before inferring reliability.' },
+  { icon: ShieldAlert, title: 'Suspicious Content Detection', text: 'We surface clickbait, fear language, unsupported superlatives and contradictions statement by statement.' },
+  { icon: History, title: 'Analysis History', text: 'You get a private, searchable history of every analysis, with trends on your dashboard.' },
+  { icon: Download, title: 'Downloadable Reports', text: 'Download branded PDF reports with the score breakdown, claims, sources and AI explanation in one click.' },
+  { icon: Bookmark, title: 'Saved Reports', text: 'Pin the analyses that matter and reopen them any time from your saved reports.' }
 ];
 export default function WhyTruthLens() {
   return (
@@ -18,15 +18,15 @@ export default function WhyTruthLens() {
           <div className="col-lg-6">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-60px' }}>
               <span className="section-label">About TruthLens AI</span>
-              <h2 style={{ fontSize: 'clamp(1.7rem, 3vw, 2.4rem)' }}>Built like an investigations desk, not a chatbot</h2>
+              <h2 style={{ fontSize: 'clamp(1.7rem, 3vw, 2.4rem)' }}>Built Like an Investigations Desk, Not a Chatbot</h2>
               <p className="text-secondary-2" style={{ fontSize: 15 }}>
                 Misinformation rarely announces itself. It hides in anonymous posts, vague attributions, emotionally loaded verbs and claims nobody else reports.
               </p>
               <p className="text-secondary-2" style={{ fontSize: 15 }}>
-                TruthLens AI treats an article the way a careful editor would: Where was this published and by whom? What exactly is being claimed? What evidence supports it? Do independent sources agree? Is the writing trying to inform you — or move you?
+                TruthLens AI reads an article the way a careful editor would: Who published this, and where? What exactly is being claimed? What evidence supports it? Do independent sources agree? Is the writing trying to inform you — or move you?
               </p>
               <p className="text-muted-2 mb-0" style={{ fontSize: 14 }}>
-                The result is a weighted credibility score with a plain-language explanation, never an absolute declaration of truth or falsehood.
+                You get a weighted credibility score with a plain-language explanation — never an absolute declaration of truth or falsehood.
               </p>
             </motion.div>
           </div>
@@ -46,7 +46,7 @@ export default function WhyTruthLens() {
                       <r.icon size={18} />
                     </span>
                     <div>
-                      <div className="fw-bold" style={{ fontSize: 13.5 }}>{r.title}</div>
+                      <h3 className="fw-bold" style={{ fontSize: 13.5 }}>{r.title}</h3>
                       <div className="text-muted-2 text-small">{r.text}</div>
                     </div>
                   </div>

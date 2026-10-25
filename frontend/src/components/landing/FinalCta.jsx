@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 export default function FinalCta() {
-  const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const analyzeTo = isAuthenticated ? '/user/analyze' : '/register?next=/user/analyze';
   return (
     <section style={{ padding: 'clamp(2.5rem, 5vw, 4.5rem) 1rem 4.5rem' }}>
       <div style={{ maxWidth: 980, margin: '0 auto' }}>
@@ -26,11 +26,11 @@ export default function FinalCta() {
             Analyze. Verify. <span style={{ color: '#A5B4FC' }}>Understand the Truth.</span>
           </h2>
           <p style={{ color: 'rgba(255,255,255,.78)', maxWidth: 560, margin: '0 auto 1.8rem', fontSize: 15 }}>
-            Your next news break doesn't have to be a leap of faith. Run it through a structured credibility analysis and see exactly why it should — or shouldn't — earn your trust.
+            Your next news break doesn’t have to be a leap of faith. Run it through a structured credibility analysis and see exactly why it should — or shouldn’t — earn your trust.
           </p>
-          <button type="button" className="btn btn-light btn-lg px-4" style={{ color: '#4338CA', fontWeight: 700 }} onClick={() => (isAuthenticated ? navigate('/user/analyze') : navigate('/register?next=/user/analyze'))}>
-            Start your first analysis <ArrowRight size={17} className="ms-1" />
-          </button>
+          <Link to={analyzeTo} className="btn btn-light btn-lg px-4" style={{ color: '#4338CA', fontWeight: 700 }}>
+            Start Your First Analysis <ArrowRight size={17} className="ms-1" />
+          </Link>
         </motion.div>
       </div>
     </section>

@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { Info, MousePointerClick } from 'lucide-react';
 const FLAGS = [
   { type: 'supported', quote: 'The RBI raised its benchmark rate by 25 basis points, according to its official statement released Thursday.', label: 'Supported', explanation: 'Directly attributable to an official statement with a verifiable date — this claim is presented with its evidence.' },
-  { type: 'warning', quote: 'Economists widely expect inflation to ease below 4% by next quarter.', label: 'Needs verification', explanation: 'An attribution like “economists widely expect” needs named experts or a survey to check. Until then it stays unverified.' },
-  { type: 'suspicious', quote: 'This single policy move will destroy the savings of every middle-class family in the country!', label: 'Potentially suspicious', explanation: 'Absolute, catastrophic framing (“destroy… every family”) with no data attached is a classic sign of emotional manipulation.' }
+  { type: 'warning', quote: 'Economists widely expect inflation to ease below 4% by next quarter.', label: 'Needs Verification', explanation: 'An attribution like “economists widely expect” needs named experts or a survey to check. Until then it stays unverified.' },
+  { type: 'suspicious', quote: 'This single policy move will destroy the savings of every middle-class family in the country!', label: 'Potentially Suspicious', explanation: 'Absolute, catastrophic framing (“destroy… every family”) with no data attached is a classic sign of emotional manipulation.' }
 ];
 export default function SuspiciousDemo() {
   const [active, setActive] = useState(1);
@@ -13,10 +13,10 @@ export default function SuspiciousDemo() {
     <section id="suspicious-demo" style={{ scrollMarginTop: 84, padding: 'clamp(3rem, 6vw, 5.5rem) 1rem' }}>
       <div style={{ maxWidth: 980, margin: '0 auto' }}>
         <motion.div initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} className="text-center mb-5">
-          <span className="section-label"><MousePointerClick size={14} /> Statement-level spotting</span>
-          <h2 style={{ fontSize: 'clamp(1.7rem, 3vw, 2.4rem)' }}>Suspicious content, highlighted where it hides</h2>
+          <span className="section-label"><MousePointerClick size={14} /> Statement-Level Spotting</span>
+          <h2 style={{ fontSize: 'clamp(1.7rem, 3vw, 2.4rem)' }}>See Suspicious Content Where It Hides</h2>
           <p className="text-muted-2" style={{ maxWidth: 640, margin: '0.4rem auto 0' }}>
-            Reports flag individual statements — not just whole articles — and explain each highlight. Click a highlighted passage:
+            Your report flags individual statements — not just whole articles — and explains every highlight. Select a passage to see why it was marked.
           </p>
         </motion.div>
         <div className="d-flex flex-wrap justify-content-center gap-2 mb-4" role="group" aria-label="Choose a highlighted statement">
@@ -41,18 +41,17 @@ export default function SuspiciousDemo() {
           </div>
           <p style={{ fontSize: 15.5, lineHeight: 2.05, color: 'var(--text-2)' }}>
             {FLAGS.map((f, i) => (
-              <span
+              <button
                 key={f.type}
-                role="button"
-                tabIndex={0}
+                type="button"
                 onClick={() => setActive(i)}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(i); } }}
+                aria-pressed={active === i}
                 className={`reveal-mark clickable-statement ${f.type === 'supported' ? 'reveal-supported' : f.type === 'warning' ? 'reveal-warning' : 'reveal-suspicious'}`}
-                aria-label={`${f.label} statement, activate to see explanation`}
+                aria-label={`${f.label} statement. Show the explanation.`}
                 title={f.label}
               >
                 {f.quote}
-              </span>
+              </button>
             ))}
           </p>
           <motion.div key={`tip-${active}`} initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }} className="hl-tip-card p-3 d-flex gap-3 mt-3">
@@ -66,8 +65,8 @@ export default function SuspiciousDemo() {
           </motion.div>
           <div className="d-flex gap-3 mt-3 pt-3 border-top flex-wrap" style={{ borderColor: 'var(--border) !important', fontSize: 12 }}>
             <span className="d-inline-flex align-items-center gap-1"><span style={{ width: 10, height: 10, borderRadius: 3, background: '#16A34A' }} /> Supported</span>
-            <span className="d-inline-flex align-items-center gap-1"><span style={{ width: 10, height: 10, borderRadius: 3, background: '#D97706' }} /> Needs verification</span>
-            <span className="d-inline-flex align-items-center gap-1"><span style={{ width: 10, height: 10, borderRadius: 3, background: '#DC2626' }} /> Potentially suspicious</span>
+            <span className="d-inline-flex align-items-center gap-1"><span style={{ width: 10, height: 10, borderRadius: 3, background: '#D97706' }} /> Needs Verification</span>
+            <span className="d-inline-flex align-items-center gap-1"><span style={{ width: 10, height: 10, borderRadius: 3, background: '#DC2626' }} /> Potentially Suspicious</span>
           </div>
         </motion.div>
       </div>

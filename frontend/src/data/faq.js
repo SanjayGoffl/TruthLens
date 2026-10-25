@@ -5,7 +5,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'How is the credibility score calculated?',
-    a: 'The backend computes the score from six weighted factors: Source Reliability (22%), Evidence Quality (22%), Claim Consistency (22%), Publication Transparency (13%), Writing Quality (8%) and Sensationalism (13%). Every factor is scored on its own evidence.'
+    a: 'TruthLens AI computes the score from six weighted factors: Source Reliability (22%), Evidence Quality (22%), Claim Consistency (22%), Publication Transparency (13%), Writing Quality (8%) and Sensationalism (13%). Every factor is scored on its own evidence.'
   },
   {
     q: 'Can TruthLens AI determine whether an article is definitely true?',
@@ -29,6 +29,6 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'How does TruthLens AI detect suspicious content?',
-    a: 'Multiple detectors look for clickbait patterns (excessive capitals, curiosity gaps, “you won\'t believe” phrasing), sensational language (fear and shock words), emotional manipulation, unsupported superlatives, extreme generalizations, contradictions and missing publication information. Suspicious passages are highlighted inside the report with per-statement explanations, so you can judge them yourself.'
+    a: 'Multiple detectors look for clickbait patterns (excessive capitals, curiosity gaps, “you won’t believe” phrasing), sensational language (fear and shock words), emotional manipulation, unsupported superlatives, extreme generalizations, contradictions and missing publication information. Suspicious passages are highlighted inside the report with per-statement explanations, so you can judge them yourself.'
   }
 ];

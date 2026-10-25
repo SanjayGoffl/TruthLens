@@ -1,10 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FileText, Gauge, Scale, ShieldCheck } from 'lucide-react';
 import Logo from '../ui/Logo';
-import { goSection } from '../../utils/scroll';
 import { useAuth } from '../../context/AuthContext';
 export default function PublicFooter() {
-  const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const appPath = (path) => (isAuthenticated ? path : `/login?next=${encodeURIComponent(path)}`);
   return (
@@ -14,37 +12,37 @@ export default function PublicFooter() {
           <div className="col-lg-5">
             <Logo size={34} />
             <p className="text-secondary-2 mt-3 mb-3" style={{ fontSize: 14, maxWidth: 380 }}>
-              AI-powered news credibility analysis. Submit a URL or paste an article, and understand the source, claims, evidence and writing patterns behind the story — with a transparent, explainable score.
+              AI-powered news credibility analysis. Submit a URL or paste an article to understand the source, claims, evidence and writing behind the story — with a transparent, explainable score.
             </p>
             <div className="d-flex align-items-center gap-2 flex-wrap">
-              <button type="button" className="btn btn-primary btn-sm" onClick={() => navigate('/register')}>Start analyzing</button>
-              <span className="chip chip-green pill"><ShieldCheck size={13} /> Transparency first</span>
+              <Link to="/register" className="btn btn-primary btn-sm">Start Analyzing</Link>
+              <span className="chip chip-green pill"><ShieldCheck size={13} /> Transparency First</span>
             </div>
           </div>
           <div className="col-6 col-md-3 col-lg-2">
-            <h6 className="mb-3" style={{ fontSize: 12.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>Explore</h6>
+            <h2 className="mb-3" style={{ fontSize: 12.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>Explore</h2>
             <ul className="list-unstyled d-grid gap-2" style={{ fontSize: 14 }}>
-              <li><button type="button" className="btn btn-link p-0 link-plain" onClick={() => goSection('how-it-works')}>How it works</button></li>
-              <li><button type="button" className="btn btn-link p-0 link-plain" onClick={() => goSection('features')}>Features</button></li>
-              <li><button type="button" className="btn btn-link p-0 link-plain" onClick={() => goSection('credibility')}>Credibility levels</button></li>
-              <li><button type="button" className="btn btn-link p-0 link-plain" onClick={() => goSection('about')}>About</button></li>
-              <li><button type="button" className="btn btn-link p-0 link-plain" onClick={() => goSection('faq')}>FAQ</button></li>
+              <li><Link to="/#how-it-works" className="link-plain">How It Works</Link></li>
+              <li><Link to="/#features" className="link-plain">Features</Link></li>
+              <li><Link to="/#credibility" className="link-plain">Credibility Levels</Link></li>
+              <li><Link to="/#about" className="link-plain">About</Link></li>
+              <li><Link to="/#faq" className="link-plain">FAQ</Link></li>
             </ul>
           </div>
           <div className="col-6 col-md-3 col-lg-2">
-            <h6 className="mb-3" style={{ fontSize: 12.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>Product</h6>
+            <h2 className="mb-3" style={{ fontSize: 12.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>Product</h2>
             <ul className="list-unstyled d-grid gap-2" style={{ fontSize: 14 }}>
-              <li><Link to={appPath('/user/analyze')} className="link-plain">Analyze an article</Link></li>
-              <li><Link to={appPath('/user/sources')} className="link-plain">Source explorer</Link></li>
-              <li><Link to="/login" className="link-plain">Log in</Link></li>
-              <li><Link to="/register" className="link-plain">Create account</Link></li>
+              <li><Link to={appPath('/user/analyze')} className="link-plain">Analyze an Article</Link></li>
+              <li><Link to={appPath('/user/sources')} className="link-plain">Source Explorer</Link></li>
+              <li><Link to="/login" className="link-plain">Sign In</Link></li>
+              <li><Link to="/register" className="link-plain">Sign Up</Link></li>
             </ul>
           </div>
           <div className="col-12 col-md-3 col-lg-3">
-            <h6 className="mb-3" style={{ fontSize: 12.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>How analysis works</h6>
+            <h2 className="mb-3" style={{ fontSize: 12.5, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--muted)' }}>How Analysis Works</h2>
             <ul className="list-unstyled d-grid gap-2 text-secondary-2" style={{ fontSize: 13.5 }}>
-              <li className="d-flex gap-2 align-items-start"><Gauge size={15} className="flex-shrink-0 mt-1 text-success" /> Weighted credibility score with full factor breakdown</li>
-              <li className="d-flex gap-2 align-items-start"><Scale size={15} className="flex-shrink-0 mt-1 text-success" /> Claim-level assessment, never blanket true/false verdicts</li>
+              <li className="d-flex gap-2 align-items-start"><Gauge size={15} className="flex-shrink-0 mt-1 text-success" /> Weighted credibility score with a full factor breakdown</li>
+              <li className="d-flex gap-2 align-items-start"><Scale size={15} className="flex-shrink-0 mt-1 text-success" /> Claim-level assessment, never a blanket true/false verdict</li>
               <li className="d-flex gap-2 align-items-start"><FileText size={15} className="flex-shrink-0 mt-1 text-success" /> Downloadable PDF credibility reports</li>
             </ul>
           </div>

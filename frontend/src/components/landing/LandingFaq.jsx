@@ -10,7 +10,7 @@ export default function LandingFaq() {
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         <motion.div initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} className="text-center mb-5">
           <span className="section-label">FAQ</span>
-          <h2 style={{ fontSize: 'clamp(1.7rem, 3vw, 2.4rem)' }}>Questions, answered</h2>
+          <h2 style={{ fontSize: 'clamp(1.7rem, 3vw, 2.4rem)' }}>Questions, Answered</h2>
         </motion.div>
         <div className="d-flex flex-column gap-3">
           {FAQ_ITEMS.map((item, i) => {

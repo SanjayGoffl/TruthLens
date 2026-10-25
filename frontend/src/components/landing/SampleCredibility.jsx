@@ -21,10 +21,10 @@ export default function SampleCredibility() {
     <section id="credibility" style={{ scrollMarginTop: 84, padding: 'clamp(3rem, 6vw, 5.5rem) 1rem' }}>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
         <motion.div initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} className="text-center mb-5">
-          <span className="section-label">The credibility scale</span>
-          <h2 style={{ fontSize: 'clamp(1.7rem, 3vw, 2.4rem)' }}>Scores with a standard, never a mystery</h2>
+          <span className="section-label">The Credibility Scale</span>
+          <h2 style={{ fontSize: 'clamp(1.7rem, 3vw, 2.4rem)' }}>Scores With a Standard, Never a Mystery</h2>
           <p className="text-muted-2" style={{ maxWidth: 640, margin: '0.4rem auto 0' }}>
-            Every report lands on the same five-level scale and must explain how it got there.
+            Every report lands on the same five-level scale and shows you exactly how it got there.
           </p>
         </motion.div>
         <div className="row g-4 align-items-start">
@@ -50,7 +50,7 @@ export default function SampleCredibility() {
             </div>
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="d-flex gap-2 mt-3 align-items-start text-muted-2" style={{ fontSize: 12.5 }}>
               <Info size={14} className="flex-shrink-0 mt-1" />
-              <span>Labels always accompany scores — color is never the only signal. Analysis below is a static sample for illustration, not live data.</span>
+              <span>Labels always accompany scores, so color is never the only signal. The analysis below is a static sample for illustration, not live data.</span>
             </motion.div>
           </div>
           <div className="col-lg-7">
@@ -109,7 +109,7 @@ export default function SampleCredibility() {
                 </div>
                 <div className="d-flex align-items-center gap-2 text-muted-2 mt-3" style={{ fontSize: 12 }}>
                   <ChevronDown size={14} />
-                  Sample visualization only — run a real analysis on your dashboard for live reports.
+                  Sample visualization only. Run a real analysis to see live reports.
                 </div>
               </div>
             </motion.div>

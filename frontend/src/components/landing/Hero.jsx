@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowRight, FileText, Link2, Radar, RotateCcw, ScanSearch, ShieldCheck, Sparkles } from 'lucide-react';
-import { goSection } from '../../utils/scroll';
 import { useAuth } from '../../context/AuthContext';
 const STAGES = [
-  { label: 'Extracting article', seconds: 1.2 },
-  { label: 'Scanning source & writing', seconds: 1.2 },
-  { label: 'Comparing claims across sources', seconds: 1.2 },
-  { label: 'Assembling the verdict', seconds: 1.1 }
+  { label: 'Extracting the article', seconds: 1.2 },
+  { label: 'Scanning source and writing', seconds: 1.2 },
+  { label: 'Cross-checking claims', seconds: 1.2 },
+  { label: 'Scoring the evidence', seconds: 1.1 }
 ];
 function ArticleCard({ visible, score }) {
   return (
@@ -116,7 +115,6 @@ function StageRail({ stage }) {
 function TruthLensStage() {
   const [stage, setStage] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const replay = () => {
     setPlaying(false);
@@ -146,7 +144,7 @@ function TruthLensStage() {
         style={{ background: 'var(--card)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', fontSize: 12.5, color: 'var(--text-2)' }}
       >
         <Radar size={15} style={{ color: 'var(--primary)' }} />
-        Watch a credibility check unfold
+        See a credibility check in action
       </motion.div>
       <div className="position-relative" style={{ width: '100%', maxWidth: 360 }}>
         <ArticleCard visible={showCard} />
@@ -199,7 +197,7 @@ function TruthLensStage() {
         </div>
         <div className="d-flex flex-wrap gap-2 justify-content-center">
           <button type="button" className="btn btn-ghost btn-sm px-3" onClick={replay}>
-            <RotateCcw size={14} className="me-1" /> Replay animation
+            <RotateCcw size={14} className="me-1" /> Replay Animation
           </button>
         </div>
       </div>
@@ -207,9 +205,8 @@ function TruthLensStage() {
   );
 }
 export default function Hero() {
-  const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const analyze = () => (isAuthenticated ? navigate('/user/analyze') : navigate('/register?next=/user/analyze'));
+  const analyzeTo = isAuthenticated ? '/user/analyze' : '/register?next=/user/analyze';
   return (
     <section id="home" className="position-relative overflow-hidden">
       <div className="grid-dots position-absolute" style={{ inset: 0, opacity: 0.5, maskImage: 'radial-gradient(70% 60% at 50% 30%, black, transparent)' }} aria-hidden="true" />
@@ -217,7 +214,7 @@ export default function Hero() {
         <div className="row align-items-center g-5">
           <div className="col-lg-6">
             <motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: 'easeOut' }}>
-              <span className="section-label"><ShieldCheck size={14} /> AI-Powered News Credibility Analyzer</span>
+              <span className="section-label"><ShieldCheck size={14} /> AI-Powered News Credibility Analysis</span>
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 26 }}
@@ -226,7 +223,7 @@ export default function Hero() {
               className="fw-800 mb-3"
               style={{ fontSize: 'clamp(2.15rem, 4.6vw, 3.55rem)', lineHeight: 1.12, letterSpacing: '-0.02em' }}
             >
-              Can you trust what <span className="text-gradient-emerald">you're reading?</span>
+              Can you trust what <span className="text-gradient-emerald">you’re reading?</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 22 }}
@@ -235,7 +232,7 @@ export default function Hero() {
               className="text-secondary-2 mb-4"
               style={{ fontSize: 'clamp(1rem, 1.4vw, 1.12rem)', maxWidth: 560 }}
             >
-              AI-powered news credibility analysis that helps you understand the source, claims, evidence, writing patterns and potential risks behind online news.
+              Paste an article and get a transparent credibility score — with a plain-English explanation of the source, claims, evidence and language behind it.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 18 }}
@@ -243,18 +240,18 @@ export default function Hero() {
               transition={{ duration: 0.55, delay: 0.36, ease: 'easeOut' }}
               className="d-flex flex-wrap gap-3 mb-4"
             >
-              <button type="button" className="btn btn-primary btn-lg px-4" onClick={analyze}>
+              <Link to={analyzeTo} className="btn btn-primary btn-lg px-4">
                 Analyze an Article <ArrowRight size={17} className="ms-1" />
-              </button>
-              <button type="button" className="btn btn-ghost btn-lg px-4" onClick={() => goSection('how-it-works')}>
-                Explore How It Works
-              </button>
+              </Link>
+              <a href="#how-it-works" className="btn btn-ghost btn-lg px-4">
+                See How It Works
+              </a>
             </motion.div>
             <motion.ul initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }} className="list-unstyled d-flex flex-wrap gap-2 mb-0" style={{ fontSize: 12.5 }}>
-              <li className="chip chip-green pill"><ShieldCheck size={12} /> Source reliability</li>
-              <li className="chip chip-green pill"><ShieldCheck size={12} /> Claim verification</li>
-              <li className="chip chip-green pill"><ShieldCheck size={12} /> Sensationalism radar</li>
-              <li className="chip chip-green pill"><ShieldCheck size={12} /> Transparent scoring</li>
+              <li className="chip chip-green pill"><ShieldCheck size={12} /> Source Reliability</li>
+              <li className="chip chip-green pill"><ShieldCheck size={12} /> Claim Verification</li>
+              <li className="chip chip-green pill"><ShieldCheck size={12} /> Sensationalism Detection</li>
+              <li className="chip chip-green pill"><ShieldCheck size={12} /> Transparent Scoring</li>
             </motion.ul>
           </div>
           <div className="col-lg-6 d-none d-lg-block">

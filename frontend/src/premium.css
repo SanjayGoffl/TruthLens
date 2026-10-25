@@ -61,7 +61,7 @@ h1, h2, h3 { letter-spacing: -0.02em; }
   border: 1px solid var(--border); box-shadow: var(--shadow-md);
 }
 .seg { display: inline-flex; padding: 4px; gap: 4px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 14px; }
-.seg button { border: 0; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 0.5rem 1.1rem; border-radius: 10px; display: inline-flex; gap: 0.45rem; align-items: center; transition: all 0.15s ease; }
+.seg button { border: 0; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 0.5rem 1.1rem; border-radius: 10px; display: inline-flex; gap: 0.45rem; align-items: center; transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease; }
 .seg button.on { background: var(--card); color: var(--text); box-shadow: var(--shadow-sm); }
 .seg button:disabled { opacity: 0.55; cursor: not-allowed; }
 textarea.paste-area { min-height: 220px; resize: vertical; line-height: 1.7; font-size: 15px; }
@@ -189,6 +189,7 @@ button, .btn, a { -webkit-tap-highlight-color: transparent; }
   color: var(--text);
   font-size: 15px;
 }
+.cmdk-input-row:focus-within { background: color-mix(in srgb, var(--primary) 6%, transparent); box-shadow: inset 0 -2px 0 var(--primary); }
 .cmdk-input-row input::placeholder { color: var(--muted); }
 .cmdk-list {
   max-height: min(56vh, 460px);

@@ -14,7 +14,9 @@ body {
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
-h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text); font-weight: 700; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text); font-weight: 700; text-wrap: balance; }
+p { text-wrap: pretty; }
+button, .btn, a, summary, label, input, select, textarea { touch-action: manipulation; }
 a { color: var(--secondary); text-decoration: none; transition: color 0.15s ease; }
 a:hover { color: var(--primary-hover); }
 [data-theme='dark'] a { color: var(--accent); }
@@ -41,7 +43,7 @@ a:hover { color: var(--primary-hover); }
 }
 .card-hover { transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease; }
 .card-hover:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: rgba(99, 102, 241, 0.4); }
-.btn { border-radius: 10px; font-weight: 600; font-family: var(--font-sans); font-size: 14.5px; padding: 0.55rem 1.15rem; transition: all 0.16s ease; }
+.btn { border-radius: 10px; font-weight: 600; font-family: var(--font-sans); font-size: 14.5px; padding: 0.55rem 1.15rem; transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease; }
 .btn-lg { padding: 0.72rem 1.5rem; font-size: 15.5px; border-radius: 12px; }
 .btn-sm { padding: 0.32rem 0.75rem; font-size: 13px; border-radius: 8px; }
 .btn-primary { background: var(--primary); border-color: var(--primary); }
@@ -193,6 +195,7 @@ a:hover { color: var(--primary-hover); }
 .clickable-statement { cursor: pointer; border-radius: 6px; transition: box-shadow 0.15s ease; }
 .clickable-statement:hover { box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.35); }
 .reveal-mark { display: inline; border-radius: 5px; padding: 0.1em 0.35em; margin: 0 0.1em; }
+button.reveal-mark { border: 0; font: inherit; line-height: inherit; color: inherit; text-align: left; }
 .reveal-supported { background: rgba(22, 163, 74, 0.18); border-bottom: 2px solid #16A34A; }
 .reveal-warning { background: rgba(217, 119, 6, 0.15); border-bottom: 2px solid #D97706; }
 .reveal-suspicious { background: rgba(220, 38, 38, 0.14); border-bottom: 2px solid #DC2626; }

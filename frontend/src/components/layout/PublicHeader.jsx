@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ChevronDown, LayoutDashboard, LogOut, Menu, Search, User as UserIcon, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { ChevronDown, LayoutDashboard, LogOut, Menu, User as UserIcon, X } from 'lucide-react';
 import Logo from '../ui/Logo';
 import ThemeToggle from '../ui/ThemeToggle';
 import { useAuth } from '../../context/AuthContext';
 import { classNames, initials } from '../../utils/credibility';
-import { goSection } from '../../utils/scroll';
-import { openCommandPalette } from '../ui/CommandPalette';
 const NAV = [
   { label: 'Home', section: null },
   { label: 'How It Works', section: 'how-it-works' },
@@ -22,7 +20,6 @@ export default function PublicHeader() {
   const [scrolled, setScrolled] = useState(false);
   const menuRef = useRef(null);
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
     setOpen(false);
@@ -78,15 +75,14 @@ export default function PublicHeader() {
         <nav className="d-none d-lg-flex align-items-center gap-1" aria-label="Main navigation">
           {NAV.map((item) =>
             item.section ? (
-              <button
+              <Link
                 key={item.label}
-                type="button"
-                onClick={() => goSection(item.section)}
+                to={`/#${item.section}`}
                 className={classNames('btn btn-sm border-0 fw-semibold', activeSection === item.section ? 'text-main' : 'text-muted-2')}
                 style={{ background: 'transparent', padding: '0.45rem 0.8rem' }}
               >
                 {item.label}
-              </button>
+              </Link>
             ) : (
               <Link key={item.label} to="/" className={classNames('btn btn-sm border-0 fw-semibold', activeSection === 'Home' ? 'text-main' : 'text-muted-2')} style={{ background: 'transparent', padding: '0.45rem 0.8rem' }}>
                 {item.label}
@@ -95,26 +91,6 @@ export default function PublicHeader() {
           )}
         </nav>
         <div className="d-flex align-items-center gap-2">
-          <button
-            type="button"
-            onClick={openCommandPalette}
-            className="btn d-none d-md-inline-flex align-items-center gap-2"
-            aria-label="Search the site (Ctrl+K)"
-            style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', borderRadius: 10, height: 36, padding: '0 0.6rem', color: 'var(--muted)', fontSize: 12.5, fontWeight: 550 }}
-          >
-            <Search size={14} />
-            <span>Search</span>
-            <kbd>Ctrl K</kbd>
-          </button>
-          <button
-            type="button"
-            onClick={openCommandPalette}
-            className="btn btn-ghost d-md-none p-2"
-            aria-label="Search the site"
-            style={{ width: 40, height: 40 }}
-          >
-            <Search size={18} />
-          </button>
           <ThemeToggle />
           {user ? (
             <div className="position-relative d-none d-sm-block" ref={menuRef}>
@@ -140,21 +116,21 @@ export default function PublicHeader() {
                     <div className="text-muted-2 text-xs">{user.email}</div>
                   </div>
                   <Link to={user.role === 'ADMIN' ? '/admin/dashboard' : '/user/dashboard'} className="dropdown-item rounded-3 d-flex align-items-center gap-2 py-2" role="menuitem">
-                    <LayoutDashboard size={15} /> {user.role === 'ADMIN' ? 'Admin dashboard' : 'My dashboard'}
+                    <LayoutDashboard size={15} /> {user.role === 'ADMIN' ? 'Admin Dashboard' : 'My Dashboard'}
                   </Link>
                   <Link to="/user/settings" className="dropdown-item rounded-3 d-flex align-items-center gap-2 py-2" role="menuitem">
                     <UserIcon size={15} /> Settings
                   </Link>
                   <button type="button" className="dropdown-item rounded-3 d-flex align-items-center gap-2 py-2 text-danger" role="menuitem" onClick={() => logout()}>
-                    <LogOut size={15} /> Log out
+                    <LogOut size={15} /> Log Out
                   </button>
                 </div>
               ) : null}
             </div>
           ) : (
             <div className="d-none d-sm-flex align-items-center gap-2">
-              <button type="button" className="btn btn-ghost" onClick={() => navigate('/login')}>Log in</button>
-              <button type="button" className="btn btn-primary btn-sm px-3" onClick={() => navigate('/register')}>Sign up</button>
+              <Link to="/login" className="btn btn-ghost">Sign In</Link>
+              <Link to="/register" className="btn btn-primary btn-sm px-3">Sign Up</Link>
             </div>
           )}
           <button type="button" className="btn btn-ghost d-lg-none p-2" aria-label="Toggle menu" aria-expanded={open} aria-controls="public-mobile-nav" style={{ width: 40, height: 40 }} onClick={() => setOpen((v) => !v)}>
@@ -166,21 +142,21 @@ export default function PublicHeader() {
         <div className="d-lg-none card rounded-0 border-0 border-top" id="public-mobile-nav" style={{ position: 'absolute', insetInline: 0, background: 'var(--card)' }}>
           <nav className="p-2 d-flex flex-column" aria-label="Mobile navigation">
             {NAV.map((item) => (
-              <button key={item.label} type="button" className="btn btn-ghost text-start justify-content-between" onClick={() => (item.section ? goSection(item.section) : navigate('/'))}>
+              <Link key={item.label} to={item.section ? `/#${item.section}` : '/'} className="btn btn-ghost text-start justify-content-between" onClick={() => setOpen(false)}>
                 {item.label}
-              </button>
+              </Link>
             ))}
             <hr className="divider mx-3" />
             {user ? (
               <>
                 <Link to={user.role === 'ADMIN' ? '/admin/dashboard' : '/user/dashboard'} className="btn btn-ghost text-start">Dashboard</Link>
                 <Link to="/user/settings" className="btn btn-ghost text-start">Settings</Link>
-                <button type="button" className="btn btn-ghost text-start text-danger" onClick={() => logout()}>Log out</button>
+                <button type="button" className="btn btn-ghost text-start text-danger" onClick={() => logout()}>Log Out</button>
               </>
             ) : (
               <>
-                <button type="button" className="btn btn-ghost text-start" onClick={() => navigate('/login')}>Log in</button>
-                <button type="button" className="btn btn-primary text-start" onClick={() => navigate('/register')}>Sign up</button>
+                <Link to="/login" className="btn btn-ghost text-start" onClick={() => setOpen(false)}>Sign In</Link>
+                <Link to="/register" className="btn btn-primary text-start" onClick={() => setOpen(false)}>Sign Up</Link>
               </>
             )}
           </nav>

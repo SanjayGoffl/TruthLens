@@ -19,9 +19,9 @@ export function openCommandPalette() {
 
 const SECTIONS = [
   { id: 'home', label: 'Home', icon: Home },
-  { id: 'how-it-works', label: 'How it works', icon: Sparkles },
+  { id: 'how-it-works', label: 'How It Works', icon: Sparkles },
   { id: 'features', label: 'Features', icon: Target },
-  { id: 'credibility', label: 'Credibility scale', icon: ShieldCheck },
+  { id: 'credibility', label: 'Credibility Scale', icon: ShieldCheck },
   { id: 'about', label: 'About', icon: Info },
   { id: 'faq', label: 'FAQ', icon: HelpCircle }
 ];
@@ -99,8 +99,8 @@ export default function CommandPalette() {
             { key: 'settings', label: 'Settings', hint: 'Page', icon: Settings, run: () => navigate('/user/settings') }
           ]
         : [
-            { key: 'login', label: 'Log in', hint: 'Account', icon: LogIn, run: () => navigate('/login') },
-            { key: 'signup', label: 'Create an account', hint: 'Account', icon: UserPlus, run: () => navigate('/register') }
+            { key: 'login', label: 'Sign In', hint: 'Account', icon: LogIn, run: () => navigate('/login') },
+            { key: 'signup', label: 'Sign Up', hint: 'Account', icon: UserPlus, run: () => navigate('/register') }
           ]
     };
     const appearance = {
@@ -108,7 +108,7 @@ export default function CommandPalette() {
       items: [
         {
           key: 'theme',
-          label: theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme',
+          label: theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme',
           hint: 'Theme',
           icon: theme === 'dark' ? Sun : Moon,
           run: toggleTheme
