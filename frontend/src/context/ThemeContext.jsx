@@ -25,15 +25,21 @@ export function ThemeProvider({ children }) {
 
   const changeTheme = useCallback((next) => {
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (typeof document.startViewTransition !== 'function' || reduce) {
+    const canAnimate = typeof document.startViewTransition === 'function' && !reduce && document.visibilityState === 'visible';
+    if (!canAnimate) {
       apply(next);
       setTheme(next);
       return;
     }
-    document.startViewTransition(() => {
+    try {
+      document.startViewTransition(() => {
+        apply(next);
+        flushSync(() => setTheme(next));
+      });
+    } catch {
       apply(next);
-      flushSync(() => setTheme(next));
-    });
+      setTheme(next);
+    }
   }, []);
 
   const value = useMemo(
