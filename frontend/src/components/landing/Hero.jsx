@@ -42,7 +42,7 @@ function ArticleCard({ visible, score }) {
         animate={visible ? { opacity: 1 } : {}}
         transition={{ delay: 0.5 }}
         className="position-absolute"
-        style={{ top: -12, right: -12, background: 'var(--card)', border: '2px solid #6366F1', color: '#4F46E5', borderRadius: 100, padding: '0.35rem 0.75rem', fontSize: 12, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5 }}
+        style={{ top: -12, right: -12, background: 'var(--card)', border: '2px solid var(--primary)', color: 'var(--brand-ink)', borderRadius: 100, padding: '0.35rem 0.75rem', fontSize: 12, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5 }}
       >
         <ScanSearch size={13} /> AI scan
       </motion.div>
@@ -170,18 +170,21 @@ function TruthLensStage() {
             style={{ top: '26%', right: -34 }}
           >
             <div className="d-flex flex-column gap-1 p-2" style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 10, boxShadow: 'var(--shadow-md)' }}>
-              {['Source', 'Claims', 'Evidence'].map((n, i) => (
+              {['Source', 'Claims', 'Evidence'].map((n, i) => {
+                const tone = ['var(--success-ink)', 'var(--brand-ink)', 'var(--brand-ink)'][i];
+                return (
                 <motion.span
                   key={n}
                   initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.15 * i }}
                   className="chip text-xs fw-bold"
-                  style={{ background: ['#16A34A', '#6366F1', '#4F46E5'][i] + '1e', color: ['#16A34A', '#6366F1', '#4F46E5'][i], border: '1px solid ' + ['#16A34A', '#6366F1', '#4F46E5'][i] + '4d' }}
+                  style={{ background: `color-mix(in srgb, ${tone} 14%, transparent)`, color: tone, border: `1px solid color-mix(in srgb, ${tone} 34%, transparent)` }}
                 >
                   {['✓ Source ok', '✓ Claim cross-checked', '✓ Evidence found'][i]}
                 </motion.span>
-              ))}
+                );
+              })}
             </div>
           </motion.div>
         ) : null}

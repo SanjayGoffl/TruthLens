@@ -13,8 +13,8 @@ import { ButtonSpinner } from '../ui/Loaders';
 import api, { errorMessage } from '../../services/api';
 import toast from 'react-hot-toast';
 import {
-  claimMeta, classNames, colorForScore, domainOf, downloadBlob, fmtDate,
-  sourceClassMeta, categoryMeta
+  claimMeta, classNames, domainOf, downloadBlob, fmtDate,
+  inkForScore, sourceClassMeta, categoryMeta
 } from '../../utils/credibility';
 function Section({ title, icon: Icon, children, id }) {
   return (
@@ -85,7 +85,7 @@ export default function AnalysisReportView({ analysis, claims, onSavedChange, sh
       setBusySave(false);
     }
   };
-  const scoreColor = colorForScore(analysis.overallScore);
+  const scoreColor = inkForScore(analysis.overallScore);
   return (
     <div className="d-flex flex-column gap-4">
       <div className="card overflow-hidden report-hero">
@@ -199,7 +199,7 @@ export default function AnalysisReportView({ analysis, claims, onSavedChange, sh
                 <div className="d-flex justify-content-between align-items-center p-3 rounded-3" style={{ background: 'var(--bg-2)' }}>
                   <span className="fw-semibold" style={{ fontSize: 13.5 }}>Reliability score</span>
                   {typeof analysis.sourceAnalysis.score === 'number' ? (
-                    <span className="font-mono fw-bold" style={{ color: colorForScore(analysis.sourceAnalysis.score) }}>{analysis.sourceAnalysis.score}/100</span>
+                    <span className="font-mono fw-bold" style={{ color: inkForScore(analysis.sourceAnalysis.score) }}>{analysis.sourceAnalysis.score}/100</span>
                   ) : (
                     <span className="chip chip-gray">Not scored</span>
                   )}

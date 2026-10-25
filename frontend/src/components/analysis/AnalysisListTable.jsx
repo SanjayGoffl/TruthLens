@@ -8,7 +8,7 @@ import EmptyState from '../ui/EmptyState';
 import PaginationBar from '../ui/PaginationBar';
 import ConfirmDialog from '../ui/ConfirmDialog';
 import { ButtonSpinner, SkeletonRows } from '../ui/Loaders';
-import { classNames, colorForVerdict, downloadBlob, fmtDate } from '../../utils/credibility';
+import { classNames, downloadBlob, fmtDate, inkForVerdict } from '../../utils/credibility';
 import { useDebounce } from '../../hooks/useDebounce';
 const SORTS = [
   { value: 'newest', label: 'Newest first' },
@@ -147,7 +147,7 @@ export default function AnalysisListTable({ savedOnly = false, title, subtitle, 
                         <div className="text-muted-2 text-xs">{item.analysisMode === 'ai' ? 'Gemini AI' : 'Heuristic'} analysis</div>
                       </td>
                       <td style={{ fontSize: 13 }} className="text-muted-2">{item.article && (item.article.publisher || item.article.domain) || 'Pasted content'}</td>
-                      <td><span className="font-mono fw-bold" style={{ color: colorForVerdict(item.verdict) }}>{item.overallScore}</span></td>
+                      <td><span className="font-mono fw-bold" style={{ color: inkForVerdict(item.verdict) }}>{item.overallScore}</span></td>
                       <td><VerdictBadge verdict={item.verdict} size="sm" /></td>
                       <td className="text-muted-2" style={{ fontSize: 12.5 }}>{fmtDate(item.createdAt, true)}</td>
                       <td>

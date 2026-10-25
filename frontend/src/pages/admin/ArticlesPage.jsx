@@ -8,7 +8,7 @@ import PaginationBar from '../../components/ui/PaginationBar';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 import AdminViewAnalysisModal from '../../components/admin/AdminViewAnalysisModal';
 import { SkeletonRows } from '../../components/ui/Loaders';
-import { colorForVerdict, domainOf, fmtDate } from '../../utils/credibility';
+import { domainOf, fmtDate, inkForVerdict } from '../../utils/credibility';
 import { useDebounce } from '../../hooks/useDebounce';
 const VERDICTS = ['Highly Credible', 'Mostly Credible', 'Uncertain', 'Potentially Misleading', 'Highly Suspicious'];
 export default function ArticlesPage() {
@@ -101,7 +101,7 @@ export default function ArticlesPage() {
                       <div className="text-muted-2 text-xs text-truncate">{a.article && (a.article.publisher || a.article.domain) ? `${a.article.publisher || ''} ${a.article.domain || ''}`.trim() : 'Pasted content'}</div>
                     </td>
                     <td className="text-muted-2" style={{ fontSize: 13 }}>{a.user ? a.user.name : '—'}</td>
-                    <td><span className="font-mono fw-bold" style={{ color: colorForVerdict(a.verdict) }}>{a.overallScore}</span></td>
+                    <td><span className="font-mono fw-bold" style={{ color: inkForVerdict(a.verdict) }}>{a.overallScore}</span></td>
                     <td><VerdictBadge verdict={a.verdict} size="sm" /></td>
                     <td className="text-muted-2" style={{ fontSize: 13 }}>{a.suspiciousStatements ? a.suspiciousStatements.length : 0}</td>
                     <td><span className="chip chip-gray text-xs">{a.analysisMode === 'ai' ? 'Gemini AI' : 'Heuristic'}</span></td>

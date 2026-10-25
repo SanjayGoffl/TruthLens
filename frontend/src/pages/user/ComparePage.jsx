@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { GitCompare } from 'lucide-react';
 import api, { errorMessage } from '../../services/api';
 import VerdictBadge from '../../components/ui/VerdictBadge';
-import { colorForScore } from '../../utils/credibility';
+import { inkForScore } from '../../utils/credibility';
 import { PageLoader } from '../../components/ui/Loaders';
 import EmptyState from '../../components/ui/EmptyState';
 
@@ -66,7 +66,7 @@ export default function ComparePage() {
                   <tbody>
                     <tr>
                       <td className="fw-semibold">Overall score</td>
-                      {pair.map((p, i) => <td key={i}><span className="font-mono fw-bold" style={{ color: colorForScore(p.overallScore) }}>{p.overallScore}</span> <VerdictBadge verdict={p.verdict} size="sm" /></td>)}
+                      {pair.map((p, i) => <td key={i}><span className="font-mono fw-bold" style={{ color: inkForScore(p.overallScore) }}>{p.overallScore}</span> <VerdictBadge verdict={p.verdict} size="sm" /></td>)}
                       <td className="font-mono fw-bold">{pair[1].overallScore - pair[0].overallScore > 0 ? '+' : ''}{pair[1].overallScore - pair[0].overallScore}</td>
                     </tr>
                     {FACTORS.map(([key, name]) => {

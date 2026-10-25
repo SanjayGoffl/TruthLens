@@ -8,7 +8,7 @@ import PaginationBar from '../../components/ui/PaginationBar';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 import Dialog from '../../components/ui/Dialog';
 import { SkeletonRows } from '../../components/ui/Loaders';
-import { classNames, colorForVerdict, fmtDate, initials } from '../../utils/credibility';
+import { classNames, fmtDate, initials, inkForVerdict } from '../../utils/credibility';
 import { useAuth } from '../../context/AuthContext';
 import { useDebounce } from '../../hooks/useDebounce';
 export default function UsersPage() {
@@ -250,7 +250,7 @@ function UserDetailModal({ userId, onClose, onChanged }) {
                 <div className="d-grid gap-2">
                   {data.analyses.map((a) => (
                     <div key={a._id} className="d-flex align-items-center gap-2 p-2 rounded-3 flex-wrap" style={{ background: 'var(--bg-2)' }}>
-                      <span className="font-mono fw-bold" style={{ color: colorForVerdict(a.verdict), minWidth: 36 }}>{a.overallScore}</span>
+                      <span className="font-mono fw-bold" style={{ color: inkForVerdict(a.verdict), minWidth: 36 }}>{a.overallScore}</span>
                       <VerdictBadge verdict={a.verdict} size="sm" />
                       <div className="flex-grow-1 min-w-0">
                         <div className="fw-semibold text-main text-truncate" style={{ fontSize: 13 }}>{a.article && a.article.title || 'Untitled'}</div>

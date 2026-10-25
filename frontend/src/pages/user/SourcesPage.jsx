@@ -7,7 +7,7 @@ import PaginationBar from '../../components/ui/PaginationBar';
 import { SkeletonCards } from '../../components/ui/Loaders';
 import Dialog from '../../components/ui/Dialog';
 import VerdictBadge from '../../components/ui/VerdictBadge';
-import { classNames, colorForScore, fmtDate, sourceClassMeta } from '../../utils/credibility';
+import { classNames, fmtDate, inkForScore, sourceClassMeta } from '../../utils/credibility';
 import { useDebounce } from '../../hooks/useDebounce';
 export default function SourcesPage() {
   const [items, setItems] = useState([]);
@@ -97,7 +97,7 @@ export default function SourcesPage() {
                         <div className="fw-bold text-main text-truncate" style={{ fontSize: 14.5 }}>{source.name}</div>
                         <div className="text-muted-2 text-xs text-truncate">{source.domain || '—'}</div>
                       </div>
-                      <span className="font-mono fw-bold" style={{ color: colorForScore(source.reliabilityScore) }}>{source.reliabilityScore}</span>
+                      <span className="font-mono fw-bold" style={{ color: inkForScore(source.reliabilityScore) }}>{source.reliabilityScore}</span>
                     </div>
                     <div className="d-flex align-items-center justify-content-between mt-3">
                       <span className={classNames('chip', meta.chip, 'text-xs')}>{source.classification}</span>
@@ -139,7 +139,7 @@ export default function SourcesPage() {
                   <div className="row g-3 mb-3">
                     <div className="col-md-3 col-6">
                       <div className="p-3 rounded-3 h-100" style={{ background: 'var(--bg-2)' }}>
-                        <div className="font-mono fw-bold" style={{ color: colorForScore(detail.source.reliabilityScore) }}>{detail.source.reliabilityScore}/100</div>
+                        <div className="font-mono fw-bold" style={{ color: inkForScore(detail.source.reliabilityScore) }}>{detail.source.reliabilityScore}/100</div>
                         <div className="text-muted-2 text-xs">Reliability score</div>
                       </div>
                     </div>
@@ -168,7 +168,7 @@ export default function SourcesPage() {
                     <div className="d-grid gap-2">
                       {detail.recent.map((a) => (
                         <div key={a._id} className="d-flex align-items-center gap-2 p-2 rounded-3" style={{ background: 'var(--bg-2)' }}>
-                          <span className="font-mono fw-bold flex-shrink-0" style={{ color: colorForScore(a.overallScore), width: 34 }}>{a.overallScore}</span>
+                          <span className="font-mono fw-bold flex-shrink-0" style={{ color: inkForScore(a.overallScore), width: 34 }}>{a.overallScore}</span>
                           <VerdictBadge verdict={a.verdict} size="sm" />
                           <div className="flex-grow-1 min-w-0">
                             <div className="text-main text-truncate fw-semibold" style={{ fontSize: 13 }}>{a.article && a.article.title}</div>

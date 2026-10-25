@@ -8,7 +8,7 @@ import VerdictBadge from '../../components/ui/VerdictBadge';
 import EmptyState from '../../components/ui/EmptyState';
 import { SkeletonCards, SkeletonRows } from '../../components/ui/Loaders';
 import { ChartLine, ChartDoughnut } from '../../components/ui/Charts';
-import { fmtDate, colorForVerdict } from '../../utils/credibility';
+import { fmtDate, colorForVerdict, inkForVerdict } from '../../utils/credibility';
 import { useAuth } from '../../context/AuthContext';
 export default function DashboardPage() {
   const { refreshProfile, user } = useAuth();
@@ -142,7 +142,7 @@ export default function DashboardPage() {
                           {a.article && a.article.url ? <a href={a.article.url} target="_blank" rel="noreferrer" className="text-muted-2 text-xs text-truncate d-inline-block" style={{ maxWidth: 280 }}>{a.article.url}</a> : null}
                         </td>
                         <td className="text-muted-2" style={{ fontSize: 13 }}>{a.article && (a.article.publisher || a.article.domain) || 'Pasted content'}</td>
-                        <td><span className="font-mono fw-bold" style={{ color: colorForVerdict(a.verdict) }}>{a.overallScore}</span></td>
+                        <td><span className="font-mono fw-bold" style={{ color: inkForVerdict(a.verdict) }}>{a.overallScore}</span></td>
                         <td><VerdictBadge verdict={a.verdict} size="sm" /></td>
                         <td className="text-muted-2" style={{ fontSize: 13 }}>{fmtDate(a.createdAt)}</td>
                         <td><Link to={`/user/result/${a._id}`} className="btn btn-ghost btn-sm">View</Link></td>

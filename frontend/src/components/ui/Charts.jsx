@@ -3,11 +3,25 @@ import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import { useTheme } from '../../context/ThemeContext';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Tooltip, Legend, Filler);
 const PALETTE = ['#6366F1', '#4F46E5', '#16A34A', '#818CF8', '#A5B4FC', '#4338CA', '#3730A3', '#C7D2FE'];
+/* Chart.js options are nested (scales.x.ticks.color …). A shallow assign lets a
+   caller's `scales` object wipe the theme-aware grid/tick colours entirely, so
+   merge recursively and let explicit caller values win leaf by leaf. */
+function deepMerge(base, override) {
+  if (!override || typeof override !== 'object') return base;
+  const out = Array.isArray(base) ? [...base] : { ...base };
+  for (const [key, value] of Object.entries(override)) {
+    const current = out[key];
+    out[key] = current && typeof current === 'object' && !Array.isArray(current) && value && typeof value === 'object' && !Array.isArray(value)
+      ? deepMerge(current, value)
+      : value;
+  }
+  return out;
+}
 export function BrandChart({ chart: ChartComp, labels, datasets, options, height = 260 }) {
   const { theme } = useTheme();
   const dark = theme === 'dark';
   const tick = dark ? '#94A3B8' : '#64748B';
-  const grid = dark ? '#1E322B' : '#E8EEF3';
+  const grid = dark ? 'rgba(148, 163, 184, 0.16)' : '#E8EEF3';
   const base = {
     responsive: true,
     maintainAspectRatio: false,
@@ -30,8 +44,7 @@ export function BrandChart({ chart: ChartComp, labels, datasets, options, height
       y: { beginAtZero: true, grid: { color: grid }, border: { display: false }, ticks: { color: tick, font: { size: 10.5 }, precision: 0 } }
     }
   };
-  const merged = JSON.parse(JSON.stringify(base));
-  if (options) Object.assign(merged, options);
+  const merged = deepMerge(base, options);
   return (
     <div style={{ height }}>
       <ChartComp data={{ labels, datasets }} options={merged} />
@@ -76,19 +89,19 @@ export function ChartDoughnut({ labels, data, colors = PALETTE, options, height 
         backgroundColor: dark ? '#1A1F3A' : '#ffffff',
         titleColor: dark ? '#F1F5F9' : '#111827',
         bodyColor: dark ? '#CBD5E1' : '#475569',
-        borderColor: dark ? '#1E322B' : '#E8EEF3',
+        borderColor: dark ? 'rgba(148, 163, 184, 0.16)' : '#E8EEF3',
         borderWidth: 1,
         padding: 10,
         cornerRadius: 8
       }
     }
   };
-  if (options) Object.assign(opts, options);
+  const merged = deepMerge(opts, options);
   return (
     <div style={{ height }}>
       <Doughnut
         data={{ labels, datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: dark ? '#12162B' : '#ffffff', hoverOffset: 6 }] }}
-        options={opts}
+        options={merged}
       />
     </div>
   );

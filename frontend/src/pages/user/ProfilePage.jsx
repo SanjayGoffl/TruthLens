@@ -7,7 +7,7 @@ import StatCard from '../../components/ui/StatCard';
 import VerdictBadge from '../../components/ui/VerdictBadge';
 import EmptyState from '../../components/ui/EmptyState';
 import { ButtonSpinner, SkeletonRows } from '../../components/ui/Loaders';
-import { colorForVerdict, fmtDate, initials, readFileAsDataUrl, resizeImageDataUrl } from '../../utils/credibility';
+import { fmtDate, initials, inkForVerdict, readFileAsDataUrl, resizeImageDataUrl } from '../../utils/credibility';
 import { useAuth } from '../../context/AuthContext';
 export default function ProfilePage({ embedded = false }) {
   const { user, stats, updateLocalUser, refreshProfile } = useAuth();
@@ -144,7 +144,7 @@ export default function ProfilePage({ embedded = false }) {
                     {recent.map((a) => (
                       <tr key={a._id}>
                         <td className="fw-semibold text-main text-truncate" style={{ maxWidth: 280, fontSize: 13.5 }}>{a.article && a.article.title || 'Untitled'}</td>
-                        <td><span className="font-mono fw-bold" style={{ color: colorForVerdict(a.verdict) }}>{a.overallScore}</span></td>
+                        <td><span className="font-mono fw-bold" style={{ color: inkForVerdict(a.verdict) }}>{a.overallScore}</span></td>
                         <td><VerdictBadge verdict={a.verdict} size="sm" /></td>
                         <td className="text-muted-2" style={{ fontSize: 12.5 }}>{fmtDate(a.createdAt)}</td>
                         <td><Link to={`/user/result/${a._id}`} className="btn btn-ghost btn-sm">View</Link></td>

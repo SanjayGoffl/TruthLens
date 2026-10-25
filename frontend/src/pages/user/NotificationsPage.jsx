@@ -107,7 +107,7 @@ export default function NotificationsPage() {
                     <p className="text-muted-2 mb-0" style={{ fontSize: 13, lineHeight: 1.5 }}>{n.message}</p>
                   </div>
                   <div className="d-flex flex-column align-items-end gap-1 flex-shrink-0" style={{ minWidth: 72 }}>
-                    {!n.read ? <span className="badge rounded-pill text-white" style={{ background: 'var(--primary)', fontSize: 10 }}>new</span> : null}
+                    {!n.read ? <span className="badge rounded-pill text-white" style={{ background: 'var(--brand-fill)', fontSize: 10 }}>new</span> : null}
                     <span className="text-muted-2 text-xs">{timeAgo(n.createdAt)}</span>
                     {n.link ? <Link to={n.link} onClick={() => !n.read && markRead(n._id)} className="btn btn-ghost btn-sm px-2 py-0" style={{ fontSize: 12 }}>Open</Link> : null}
                   </div>

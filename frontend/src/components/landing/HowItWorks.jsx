@@ -33,7 +33,7 @@ export default function HowItWorks() {
                   <div className="step-icon d-inline-grid place-items-center rounded-3" style={{ width: 48, height: 48, background: 'var(--bg-2)', color: 'var(--primary)' }}>
                     <Icon icon={step.icon} size={22} />
                   </div>
-                  <span className="font-mono fw-bold" style={{ fontSize: 26, color: 'var(--border)', opacity: 0.9 }}>{step.num}</span>
+                  <span className="font-mono fw-bold step-num" style={{ fontSize: 26 }}>{step.num}</span>
                 </div>
                 <h3 style={{ fontSize: 16.5 }}>{step.title}</h3>
                 <p className="text-muted-2 mb-0" style={{ fontSize: 13.5 }}>{step.text}</p>

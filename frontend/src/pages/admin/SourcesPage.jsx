@@ -7,7 +7,7 @@ import PaginationBar from '../../components/ui/PaginationBar';
 import ConfirmDialog from '../../components/ui/ConfirmDialog';
 import Dialog from '../../components/ui/Dialog';
 import { ButtonSpinner, SkeletonRows } from '../../components/ui/Loaders';
-import { classNames, colorForScore, sourceClassMeta } from '../../utils/credibility';
+import { classNames, inkForScore, sourceClassMeta } from '../../utils/credibility';
 import { useDebounce } from '../../hooks/useDebounce';
 const CLASSIFICATIONS = ['Trusted', 'Generally Reliable', 'Mixed', 'Limited Information', 'High Risk'];
 const CLASS_SCORES = { Trusted: 85, 'Generally Reliable': 70, Mixed: 55, 'Limited Information': 40, 'High Risk': 22 };
@@ -161,7 +161,7 @@ export default function SourcesPage() {
                         </div>
                       </td>
                       <td><span className={classNames('chip text-xs', meta.chip)}>{s.classification}</span></td>
-                      <td><span className="font-mono fw-bold" style={{ color: colorForScore(s.reliabilityScore) }}>{s.reliabilityScore}</span></td>
+                      <td><span className="font-mono fw-bold" style={{ color: inkForScore(s.reliabilityScore) }}>{s.reliabilityScore}</span></td>
                       <td>{s.status === 'active' ? <span className="chip chip-green text-xs">Active</span> : <span className="chip chip-gray text-xs">Inactive</span>}</td>
                       <td className="text-muted-2">{s.analyzedArticles || 0}</td>
                       <td className="text-muted-2" style={{ fontSize: 12.5 }}>{s.updatedAt ? new Date(s.updatedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '—'}</td>

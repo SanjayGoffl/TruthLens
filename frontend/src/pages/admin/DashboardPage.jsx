@@ -6,7 +6,7 @@ import StatCard from '../../components/ui/StatCard';
 import EmptyState from '../../components/ui/EmptyState';
 import { SkeletonCards, SkeletonRows } from '../../components/ui/Loaders';
 import { ChartBar, ChartLine, ChartDoughnut } from '../../components/ui/Charts';
-import { colorForVerdict, fmtDate } from '../../utils/credibility';
+import { colorForVerdict, fmtDate, inkForVerdict } from '../../utils/credibility';
 export default function DashboardPage() {
   const [data, setData] = useState(null);
   const [flagged, setFlagged] = useState(null);
@@ -103,7 +103,7 @@ export default function DashboardPage() {
               <ChartBar
                 labels={dist.credibility.map((d) => d.level)}
                 series={[{ label: 'Analyses', data: dist.credibility.map((d) => d.count), color: '#4F46E5' }]}
-                options={{ scales: { x: { grid: { display: false }, ticks: { color: '#94A3B8', font: { size: 10.5 } } }, y: { beginAtZero: true, grid: { color: '#E8EEF3' }, ticks: { color: '#94A3B8', font: { size: 10.5 }, precision: 0 } } } }}
+                options={{ scales: { x: { grid: { display: false }, ticks: { font: { size: 10.5 } } }, y: { beginAtZero: true, ticks: { font: { size: 10.5 }, precision: 0 } } } }}
                 height={210}
               />
             </div>
@@ -117,7 +117,7 @@ export default function DashboardPage() {
                 <ChartBar
                   labels={data.topDomains.map((d) => d.domain || 'unknown')}
                   series={[{ label: 'Analyses', data: data.topDomains.map((d) => d.count), color: '#6366F1' }]}
-                  options={{ indexAxis: 'y', scales: { x: { beginAtZero: true, grid: { color: '#E8EEF3' }, ticks: { color: '#94A3B8', font: { size: 10.5 }, precision: 0 } }, y: { grid: { display: false }, ticks: { color: '#94A3B8', font: { size: 10.5 } } } } }}
+                  options={{ indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { font: { size: 10.5 }, precision: 0 } }, y: { grid: { display: false }, ticks: { font: { size: 10.5 } } } } }}
                   height={210}
                 />
               ) : (
@@ -143,7 +143,7 @@ export default function DashboardPage() {
                       {f.analysis && f.analysis.article && f.analysis.article.title ? f.analysis.article.title : 'Untitled'}
                     </td>
                     <td className="text-muted-2" style={{ fontSize: 13 }}>{f.user ? f.user.name : '—'}</td>
-                    <td><span className="font-mono fw-bold" style={{ color: colorForVerdict(f.analysis ? f.analysis.verdict : 'Uncertain') }}>{f.analysis ? f.analysis.overallScore : '—'}</span></td>
+                    <td><span className="font-mono fw-bold" style={{ color: inkForVerdict(f.analysis ? f.analysis.verdict : 'Uncertain') }}>{f.analysis ? f.analysis.overallScore : '—'}</span></td>
                     <td>
                       <div className="d-flex gap-1 flex-wrap">
                         {(f.reasons || []).slice(0, 2).map((r) => <span key={r} className="chip chip-amber text-xs">{r}</span>)}

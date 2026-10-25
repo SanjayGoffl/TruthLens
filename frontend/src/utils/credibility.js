@@ -1,9 +1,15 @@
+/*
+ * `color` is the saturated fill used for chart series and progress bars, so it
+ * has to stay a real hex value (canvas cannot resolve CSS custom properties).
+ * `ink` is the matching text colour: it is a token, so it flips to a light
+ * value in dark mode instead of leaving dark-on-dark labels behind.
+ */
 export const VERDICTS = [
-  { label: 'Highly Credible', min: 80, color: '#16A34A' },
-  { label: 'Mostly Credible', min: 65, color: '#059669' },
-  { label: 'Uncertain', min: 45, color: '#D97706' },
-  { label: 'Potentially Misleading', min: 25, color: '#EA580C' },
-  { label: 'Highly Suspicious', min: 0, color: '#DC2626' }
+  { label: 'Highly Credible', min: 80, color: '#16A34A', ink: 'var(--success-ink)' },
+  { label: 'Mostly Credible', min: 65, color: '#059669', ink: 'var(--brand-ink)' },
+  { label: 'Uncertain', min: 45, color: '#D97706', ink: 'var(--warning-ink)' },
+  { label: 'Potentially Misleading', min: 25, color: '#EA580C', ink: 'var(--orange-ink)' },
+  { label: 'Highly Suspicious', min: 0, color: '#DC2626', ink: 'var(--danger-ink)' }
 ];
 export function verdictFor(score) {
   const n = typeof score === 'number' ? score : Number(score);
@@ -14,39 +20,47 @@ export function colorForScore(score) {
   if (typeof score !== 'number' || Number.isNaN(score)) return '#D97706';
   return (VERDICTS.find((v) => score >= v.min) || VERDICTS[2]).color;
 }
+export function inkForScore(score) {
+  if (typeof score !== 'number' || Number.isNaN(score)) return 'var(--warning-ink)';
+  return (VERDICTS.find((v) => score >= v.min) || VERDICTS[2]).ink;
+}
 export function colorForVerdict(label) {
   const found = VERDICTS.find((v) => v.label === label);
   return found ? found.color : '#D97706';
 }
+export function inkForVerdict(label) {
+  const found = VERDICTS.find((v) => v.label === label);
+  return found ? found.ink : 'var(--warning-ink)';
+}
 export const CLAIM_ASSESSMENTS = [
-  { label: 'Supported', color: '#16A34A', chip: 'chip-green' },
-  { label: 'Partially Supported', color: '#059669', chip: 'chip-teal' },
-  { label: 'Needs Verification', color: '#D97706', chip: 'chip-amber' },
-  { label: 'Unsupported', color: '#EA580C', chip: 'chip-orange' },
-  { label: 'Contradicted', color: '#DC2626', chip: 'chip-red' }
+  { label: 'Supported', color: '#16A34A', ink: 'var(--success-ink)', chip: 'chip-green' },
+  { label: 'Partially Supported', color: '#059669', ink: 'var(--brand-ink)', chip: 'chip-teal' },
+  { label: 'Needs Verification', color: '#D97706', ink: 'var(--warning-ink)', chip: 'chip-amber' },
+  { label: 'Unsupported', color: '#EA580C', ink: 'var(--orange-ink)', chip: 'chip-orange' },
+  { label: 'Contradicted', color: '#DC2626', ink: 'var(--danger-ink)', chip: 'chip-red' }
 ];
 export function claimMeta(assessment) {
   return CLAIM_ASSESSMENTS.find((a) => a.label === assessment) || CLAIM_ASSESSMENTS[2];
 }
 export const STANCE_META = {
-  Supports: { color: '#16A34A', chip: 'chip-green' },
-  Partial: { color: '#D97706', chip: 'chip-amber' },
-  Contradicts: { color: '#DC2626', chip: 'chip-red' },
-  Neutral: { color: '#64748B', chip: 'chip-gray' }
+  Supports: { color: '#16A34A', ink: 'var(--success-ink)', chip: 'chip-green' },
+  Partial: { color: '#D97706', ink: 'var(--warning-ink)', chip: 'chip-amber' },
+  Contradicts: { color: '#DC2626', ink: 'var(--danger-ink)', chip: 'chip-red' },
+  Neutral: { color: '#64748B', ink: 'var(--muted-ink)', chip: 'chip-gray' }
 };
 export function stanceMeta(stance) {
   return STANCE_META[stance] || STANCE_META.Neutral;
 }
 export const SUSPICIOUS_CATEGORY_META = {
-  'Unsupported claim': { color: '#EA580C', chip: 'chip-orange' },
-  'Missing evidence': { color: '#D97706', chip: 'chip-amber' },
-  'Contradiction': { color: '#DC2626', chip: 'chip-red' },
-  'Extreme or generalized statement': { color: '#EA580C', chip: 'chip-orange' },
-  'Sensational language': { color: '#D97706', chip: 'chip-amber' },
-  'Suspicious publication information': { color: '#64748B', chip: 'chip-gray' }
+  'Unsupported claim': { color: '#EA580C', ink: 'var(--orange-ink)', chip: 'chip-orange' },
+  'Missing evidence': { color: '#D97706', ink: 'var(--warning-ink)', chip: 'chip-amber' },
+  'Contradiction': { color: '#DC2626', ink: 'var(--danger-ink)', chip: 'chip-red' },
+  'Extreme or generalized statement': { color: '#EA580C', ink: 'var(--orange-ink)', chip: 'chip-orange' },
+  'Sensational language': { color: '#D97706', ink: 'var(--warning-ink)', chip: 'chip-amber' },
+  'Suspicious publication information': { color: '#64748B', ink: 'var(--muted-ink)', chip: 'chip-gray' }
 };
 export function categoryMeta(cat) {
-  return SUSPICIOUS_CATEGORY_META[cat] || { color: '#64748B', chip: 'chip-gray' };
+  return SUSPICIOUS_CATEGORY_META[cat] || { color: '#64748B', ink: 'var(--muted-ink)', chip: 'chip-gray' };
 }
 export const FLAG_STATUS_META = {
   pending: { label: 'Pending review', chip: 'chip-amber' },
@@ -58,11 +72,11 @@ export function flagStatusMeta(status) {
   return FLAG_STATUS_META[status] || FLAG_STATUS_META.pending;
 }
 export const SOURCE_CLASS_META = {
-  Trusted: { chip: 'chip-green', color: '#16A34A' },
-  'Generally Reliable': { chip: 'chip-teal', color: '#059669' },
-  Mixed: { chip: 'chip-amber', color: '#D97706' },
-  'Limited Information': { chip: 'chip-gray', color: '#64748B' },
-  'High Risk': { chip: 'chip-red', color: '#DC2626' }
+  Trusted: { chip: 'chip-green', color: '#16A34A', ink: 'var(--success-ink)' },
+  'Generally Reliable': { chip: 'chip-teal', color: '#059669', ink: 'var(--brand-ink)' },
+  Mixed: { chip: 'chip-amber', color: '#D97706', ink: 'var(--warning-ink)' },
+  'Limited Information': { chip: 'chip-gray', color: '#64748B', ink: 'var(--muted-ink)' },
+  'High Risk': { chip: 'chip-red', color: '#DC2626', ink: 'var(--danger-ink)' }
 };
 export function sourceClassMeta(label) {
   return SOURCE_CLASS_META[label] || SOURCE_CLASS_META['Limited Information'];

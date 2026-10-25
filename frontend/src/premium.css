@@ -1,18 +1,10 @@
 /* TruthLens AI — premium design layer. Loaded after index.css; refines components. */
 /* Tokens live in design-tokens.css — do not redefine them here. */
 body {
-  background:
-    radial-gradient(900px 480px at 85% -10%, rgba(99, 102, 241, 0.08), transparent 60%),
-    radial-gradient(700px 400px at -5% 10%, rgba(124, 58, 237, 0.06), transparent 60%),
-    var(--bg);
-  background-attachment: fixed;
+  background: var(--bg);
 }
 [data-theme='dark'] body {
-  background:
-    radial-gradient(900px 480px at 85% -10%, rgba(99, 102, 241, 0.12), transparent 60%),
-    radial-gradient(700px 400px at -5% 10%, rgba(124, 58, 237, 0.08), transparent 60%),
-    var(--bg);
-  background-attachment: fixed;
+  background: var(--bg);
 }
 h1, h2, h3 { letter-spacing: -0.02em; }
 .card { border-radius: var(--radius); box-shadow: var(--shadow-sm); }
@@ -21,7 +13,6 @@ h1, h2, h3 { letter-spacing: -0.02em; }
 .btn:active { transform: translateY(1px) scale(0.99); }
 .btn-primary { background: var(--grad-brand); border: none; box-shadow: var(--glow); color: #fff; }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active { background: var(--grad-brand) !important; filter: brightness(1.06); box-shadow: 0 10px 28px -6px rgba(79, 70, 229, 0.55); }
-[data-theme='dark'] .btn-primary { color: #0B0B2E; }
 .form-control, .form-select { border-radius: 12px; }
 .form-control:focus, .form-select:focus { box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16); }
 .page-title { letter-spacing: -0.025em; }
@@ -30,7 +21,6 @@ h1, h2, h3 { letter-spacing: -0.02em; }
 .nav-item-ng { color: var(--muted); position: relative; transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease; }
 .nav-item-ng:hover { background: var(--bg-2); color: var(--text); }
 .nav-item-ng.active { background: var(--grad-brand); color: #fff !important; box-shadow: var(--glow); }
-[data-theme='dark'] .nav-item-ng.active { color: #0B0B2E !important; }
 .sidebar-shell { background: color-mix(in srgb, var(--card) 88%, transparent); backdrop-filter: blur(14px); }
 
 /* Mobile bottom navigation (user area) */
@@ -287,6 +277,11 @@ kbd, .kbd {
 .nav-link-ng:hover { color: var(--text); background: var(--bg-2) !important; }
 .nav-link-ng.is-active { color: var(--primary); }
 .nav-link-ng.is-active::after { transform: scaleX(1); }
+/* --primary is too dark to read as text on a dark surface. */
+[data-theme='dark'] .nav-link-ng.is-active,
+[data-theme='dark'] .bottom-nav a.active,
+[data-theme='dark'] .cmdk-item.is-active,
+[data-theme='dark'] .step-item.active .step-dot { color: var(--brand-ink); }
 
 .account-trigger { transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease; }
 .account-trigger[data-state='open'] {
@@ -334,6 +329,9 @@ kbd, .kbd {
   transition: transform 0.25s var(--ease-out), background-color 0.25s ease,
     color 0.25s ease, box-shadow 0.25s ease;
 }
+
+/* Step ordinal. Used to sit on var(--border), which disappears in dark mode. */
+.step-num { color: var(--muted); opacity: 0.55; }
 .step-icon svg,
 .feature-icon svg { transition: transform 0.32s var(--ease-spring); }
 .card-hover:hover .step-icon,

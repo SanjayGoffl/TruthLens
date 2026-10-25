@@ -134,7 +134,7 @@ export default function AnalyticsPage() {
                     <ChartBar
                       labels={data.topDomains.map((d) => d.domain || 'unknown')}
                       series={[{ label: 'Analyses', data: data.topDomains.map((d) => d.count), color: '#6366F1' }]}
-                      options={{ indexAxis: 'y', scales: { x: { beginAtZero: true, grid: { color: '#E8EEF3' }, ticks: { color: '#94A3B8', font: { size: 10 }, precision: 0 } }, y: { grid: { display: false }, ticks: { color: '#94A3B8', font: { size: 10 } } } } }}
+                      options={{ indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { font: { size: 10 }, precision: 0 } }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } } }}
                       height={Math.max(140, data.topDomains.length * 42)}
                     />
                   ) : (
@@ -151,7 +151,7 @@ export default function AnalyticsPage() {
                     <ChartBar
                       labels={data.topUsers.map((u) => (u.name || 'Unknown').split(' ')[0])}
                       series={[{ label: 'Analyses', data: data.topUsers.map((u) => u.count), color: '#8B5CF6' }]}
-                      options={{ indexAxis: 'y', scales: { x: { beginAtZero: true, grid: { color: '#E8EEF3' }, ticks: { color: '#94A3B8', font: { size: 10 }, precision: 0 } }, y: { grid: { display: false }, ticks: { color: '#94A3B8', font: { size: 10 } } } } }}
+                      options={{ indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { font: { size: 10 }, precision: 0 } }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } } }}
                       height={Math.max(140, data.topUsers.length * 42)}
                     />
                   ) : (

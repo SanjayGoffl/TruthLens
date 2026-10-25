@@ -33,6 +33,20 @@
   --danger: #dc2626;
   --orange: #ea580c;
 
+  /* Status text: readable-on-surface variants used for coloured labels.
+     Fills keep the values above; text uses these so it stays legible. */
+  --success-ink: #15803d;
+  --warning-ink: #b45309;
+  --danger-ink: #b91c1c;
+  --orange-ink: #c2410c;
+  --brand-ink: #4338ca;
+  --muted-ink: #475569;
+  /* Solid red fill that keeps white text at 4.5:1 or better. */
+  --danger-fill: #dc2626;
+  /* Solid brand fill for white-text badges; darkens in dark mode because
+     #6366f1 only reaches 4.47:1 against white. */
+  --brand-fill: #4f46e5;
+
   /* Elevation */
   --shadow-sm: 0 1px 2px rgba(11, 31, 25, 0.04), 0 1px 1px rgba(11, 31, 25, 0.03);
   --shadow-md: 0 8px 24px -8px rgba(11, 31, 25, 0.12), 0 2px 6px rgba(11, 31, 25, 0.04);
@@ -61,7 +75,9 @@
 [data-theme='dark'] {
   --primary: #6366f1;
   --primary-hover: #818cf8;
-  --secondary: #4f46e5;
+  /* Dark indigo is unreadable on a dark surface, so links and accent text
+     switch to the light end of the brand ramp. */
+  --secondary: #a5b4fc;
   --accent: #6366f1;
   --glow: 0 8px 28px -6px rgba(99, 102, 241, 0.35);
 
@@ -80,6 +96,15 @@
   --warning: #f59e0b;
   --danger: #ef4444;
   --orange: #fb923c;
+
+  --success-ink: #86efac;
+  --warning-ink: #fcd34d;
+  --danger-ink: #fca5a5;
+  --orange-ink: #fdba74;
+  --brand-ink: #a5b4fc;
+  --muted-ink: #94a3b8;
+  --danger-fill: #b91c1c;
+  --brand-fill: #4338ca;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.6);

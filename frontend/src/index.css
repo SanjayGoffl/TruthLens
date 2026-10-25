@@ -19,13 +19,23 @@ p { text-wrap: pretty; }
 button, .btn, a, summary, label, input, select, textarea { touch-action: manipulation; }
 a { color: var(--secondary); text-decoration: none; transition: color 0.15s ease; }
 a:hover { color: var(--primary-hover); }
-[data-theme='dark'] a { color: var(--accent); }
-[data-theme='dark'] a:hover { color: #A5B4FC; }
+[data-theme='dark'] a { color: var(--secondary); }
+[data-theme='dark'] a:hover { color: #C7D2FE; }
 [data-theme='dark'] .text-dark,
 [data-theme='dark'] .text-black,
 [data-theme='dark'] .text-body,
 [data-theme='dark'] .text-secondary { color: var(--text-2) !important; }
 [data-theme='dark'] .text-muted { color: var(--muted) !important; }
+/* Bootstrap's status utilities are tuned for a white page. On dark surfaces
+   they land around 3:1, so swap them for the readable ink variants. */
+[data-theme='dark'] .text-success { color: var(--success-ink) !important; }
+[data-theme='dark'] .text-danger { color: var(--danger-ink) !important; }
+[data-theme='dark'] .text-warning { color: var(--warning-ink) !important; }
+[data-theme='dark'] .text-primary { color: var(--brand-ink) !important; }
+[data-theme='dark'] .text-info { color: #7DD3FC !important; }
+[data-theme='dark'] .text-body-secondary,
+[data-theme='dark'] .text-black-50,
+[data-theme='dark'] .text-muted-2 { color: var(--muted-ink) !important; }
 [data-theme='dark'] .bg-white,
 [data-theme='dark'] .bg-light { background-color: var(--card) !important; }
 ::selection { background: rgba(99, 102, 241, 0.25); }
@@ -48,12 +58,17 @@ a:hover { color: var(--primary-hover); }
 .btn-sm { padding: 0.32rem 0.75rem; font-size: 13px; border-radius: 8px; }
 .btn-primary { background: var(--primary); border-color: var(--primary); }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active { background: var(--primary-hover) !important; border-color: var(--primary-hover) !important; }
-[data-theme='dark'] .btn-primary { color: #0B0B2E; }
+/* premium.css paints .btn-primary with the indigo gradient, so the label has to
+   stay white: #0B0B2E on #4f46e5 is only 3.0:1, while white is 6.3:1. */
+[data-theme='dark'] .btn-primary { color: #fff; }
 .btn-outline-primary { color: var(--primary); border-color: var(--primary); }
 .btn-outline-primary:hover { background: var(--primary); border-color: var(--primary); color: #fff; }
-[data-theme='dark'] .btn-outline-primary:hover { color: #0B0B2E; }
+/* Filled hover state: white on #6366f1 is 4.47:1, so use the darker indigo. */
+[data-theme='dark'] .btn-outline-primary { color: var(--brand-ink); border-color: var(--brand-ink); }
+[data-theme='dark'] .btn-outline-primary:hover { background: #4f46e5; border-color: #4f46e5; color: #fff; }
 .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-2); }
 .btn-ghost:hover { background: var(--bg-2); border-color: var(--primary); color: var(--primary); }
+[data-theme='dark'] .btn-ghost:hover { color: var(--brand-ink); border-color: var(--brand-ink); }
 .btn-danger-soft { background: rgba(220, 38, 38, 0.1); color: var(--danger); border: 1px solid transparent; }
 .btn-danger-soft:hover { background: rgba(220, 38, 38, 0.16); color: var(--danger); border-color: rgba(220, 38, 38, 0.3); }
 .btn-success-soft { background: rgba(22, 163, 74, 0.12); color: var(--success); border: 1px solid transparent; }
@@ -154,6 +169,7 @@ a:hover { color: var(--primary-hover); }
 [data-theme='dark'] .chip-red { color: #FCA5A5; }
 [data-theme='dark'] .chip-blue { color: #93C5FD; }
 .avatar { border-radius: 50%; object-fit: cover; background: var(--bg-2); color: var(--primary); display: grid; place-items: center; font-weight: 700; }
+[data-theme='dark'] .avatar { color: var(--brand-ink); }
 .avatar-sm { width: 34px; height: 34px; font-size: 13px; }
 .avatar-md { width: 44px; height: 44px; font-size: 16px; }
 .avatar-lg { width: 84px; height: 84px; font-size: 30px; }
@@ -184,8 +200,8 @@ a:hover { color: var(--primary-hover); }
 }
 @keyframes scanmove { 0% { transform: translateY(0); opacity: 0; } 12% { opacity: 1; } 50% { transform: translateY(calc(100% - 2px)); opacity: 1; } 62% { opacity: 0; } 100% { transform: translateY(calc(100% - 2px)); opacity: 0; } }
 .grid-dots { background-image: radial-gradient(rgba(99, 102, 241, 0.18) 1px, transparent 1px); background-size: 22px 22px; }
-.text-gradient-emerald { background: linear-gradient(100deg, #818CF8, #6366F1 45%, #4338CA); -webkit-background-clip: text; background-clip: text; color: transparent; }
-[data-theme='dark'] .text-gradient-emerald { background: linear-gradient(100deg, #A5B4FC, #818CF8 45%, #6366F1); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.text-gradient-emerald { color: var(--primary); }
+[data-theme='dark'] .text-gradient-emerald { color: var(--brand-ink); }
 .font-display { font-family: var(--font-display); }
 .font-mono { font-family: var(--font-mono); }
 .fw-800 { font-weight: 800; }
@@ -234,7 +250,7 @@ details.calc-details[open] .chev { transform: rotate(180deg); }
 @media (min-width: 992px) { .report-score-panel { border-left: 1px solid var(--border); } }
 
 /* Skip link (keyboard users) */
-.skip-link {
+a.skip-link {
   position: fixed;
   top: -100%;
   left: 1rem;
@@ -248,7 +264,13 @@ details.calc-details[open] .chev { transform: rotate(180deg); }
   box-shadow: var(--shadow-md);
   transition: top 0.15s ease;
 }
-.skip-link:focus { top: 1rem; color: #fff; }
+/* #6366f1 only reaches 4.47:1 against white; darken the pill in dark mode. */
+[data-theme='dark'] a.skip-link { background: #4338CA; }
+/* Higher specificity than `[data-theme='dark'] a`, which would otherwise
+   repaint the label in the brand colour on top of the brand background. */
+a.skip-link:focus,
+[data-theme='dark'] a.skip-link:focus,
+[data-theme='dark'] a.skip-link:focus:hover { top: 1rem; color: #fff; }
 
 /* Light, consistent interaction tone for auth + public surfaces */
 .auth-card .btn-primary { width: 100%; }

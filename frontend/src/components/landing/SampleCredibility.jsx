@@ -2,11 +2,11 @@ import { motion } from 'framer-motion';
 import { ChevronDown, Info } from 'lucide-react';
 import CountUp from '../ui/CountUp';
 const SCALE = [
-  { range: '80–100', label: 'Highly Credible', color: '#16A34A', note: 'Strong source signals, evidence and consistent claims.' },
-  { range: '65–79', label: 'Mostly Credible', color: '#4F46E5', note: 'Generally sound with minor gaps or caveats.' },
-  { range: '45–64', label: 'Uncertain', color: '#D97706', note: 'Mixed signals — verify before relying on it.' },
-  { range: '25–44', label: 'Potentially Misleading', color: '#EA580C', note: 'Weak evidence, loaded language or unreliable sourcing.' },
-  { range: '0–24', label: 'Highly Suspicious', color: '#DC2626', note: 'Multiple strong risk signals present.' }
+  { range: '80–100', label: 'Highly Credible', color: 'var(--success-ink)', note: 'Strong source signals, evidence and consistent claims.' },
+  { range: '65–79', label: 'Mostly Credible', color: 'var(--brand-ink)', note: 'Generally sound with minor gaps or caveats.' },
+  { range: '45–64', label: 'Uncertain', color: 'var(--warning-ink)', note: 'Mixed signals — verify before relying on it.' },
+  { range: '25–44', label: 'Potentially Misleading', color: 'var(--orange-ink)', note: 'Weak evidence, loaded language or unreliable sourcing.' },
+  { range: '0–24', label: 'Highly Suspicious', color: 'var(--danger-ink)', note: 'Multiple strong risk signals present.' }
 ];
 const SAMPLE_FACTORS = [
   { label: 'Source Reliability', score: 91 },
@@ -55,7 +55,7 @@ export default function SampleCredibility() {
           </div>
           <div className="col-lg-7">
             <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.55 }} className="card overflow-hidden" style={{ boxShadow: 'var(--shadow-lg)' }}>
-              <div className="p-4 d-flex flex-wrap align-items-center gap-3" style={{ background: 'linear-gradient(120deg, rgba(99,102,241,.14), transparent 55%)' }}>
+              <div className="p-4 d-flex flex-wrap align-items-center gap-3" style={{ background: 'var(--card)' }}>
                 <div className="position-relative">
                   <svg width="118" height="118" viewBox="0 0 118 118" role="img" aria-label="Sample credibility score 87 of 100, Highly Credible">
                     <circle cx="59" cy="59" r="49" fill="none" stroke="var(--border)" strokeWidth="10" />
@@ -92,7 +92,7 @@ export default function SampleCredibility() {
                     <div className="col-md-6" key={f.label}>
                       <div className="d-flex justify-content-between align-items-center mb-1">
                         <span className="text-small fw-semibold">{f.label}</span>
-                        <span className="font-mono text-small fw-bold" style={{ color: f.score >= 80 ? '#16A34A' : f.score >= 65 ? '#4F46E5' : '#D97706' }}><CountUp value={f.score} duration={0.9} />/100</span>
+                        <span className="font-mono text-small fw-bold" style={{ color: f.score >= 80 ? 'var(--success-ink)' : f.score >= 65 ? 'var(--brand-ink)' : 'var(--warning-ink)' }}><CountUp value={f.score} duration={0.9} />/100</span>
                       </div>
                       <div className="progress" style={{ height: 6 }}>
                         <motion.div

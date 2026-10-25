@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'framer-motion';
-import { colorForScore } from '../../utils/credibility';
+import { colorForScore, inkForScore } from '../../utils/credibility';
 export default function ScoreRing({ score, size = 168, stroke = 13, label = '/ 100', sublabel }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-40px' });
@@ -8,6 +8,7 @@ export default function ScoreRing({ score, size = 168, stroke = 13, label = '/ 1
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
   const color = colorForScore(score);
+  const ink = inkForScore(score);
   useEffect(() => {
     if (!inView) return undefined;
     const duration = 1100;
@@ -45,7 +46,7 @@ export default function ScoreRing({ score, size = 168, stroke = 13, label = '/ 1
           <span style={{ fontSize: size * 0.09, color: 'var(--muted)' }}>{label}</span>
         </div>
         {sublabel ? (
-          <div className="fw-bold mt-1" style={{ fontSize: size * 0.062, color }}>
+          <div className="fw-bold mt-1" style={{ fontSize: size * 0.062, color: ink }}>
             {sublabel}
           </div>
         ) : null}

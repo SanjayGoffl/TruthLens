@@ -217,7 +217,7 @@ export default function DashboardLayout({ role, children }) {
                   <button type="button" className="btn btn-ghost position-relative p-2" style={{ width: 40, height: 40 }} aria-label="Notifications" onClick={() => navigate(role === 'ADMIN' ? '/admin/notifications' : '/user/notifications')}>
                     <Bell size={18} />
                     {unread > 0 ? (
-                      <span className="position-absolute top-0 end-0 badge rounded-pill text-white" style={{ background: 'var(--danger)', fontSize: 9.5, minWidth: 17 }}>
+                      <span className="position-absolute top-0 end-0 badge rounded-pill text-white" style={{ background: 'var(--danger-fill)', fontSize: 9.5, minWidth: 17 }}>
                         {unread > 9 ? '9+' : unread}
                       </span>
                     ) : null}

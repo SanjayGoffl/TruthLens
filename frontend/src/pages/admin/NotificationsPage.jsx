@@ -116,7 +116,7 @@ export default function NotificationsPage() {
                     </div>
                     <p className="text-muted-2 mb-0" style={{ fontSize: 13 }}>{n.message}</p>
                   </div>
-                  {!n.read ? <span className="badge rounded-pill text-white flex-shrink-0" style={{ background: 'var(--primary)' }}>new</span> : null}
+                  {!n.read ? <span className="badge rounded-pill text-white flex-shrink-0" style={{ background: 'var(--brand-fill)' }}>new</span> : null}
                 </div>
               );
             })}

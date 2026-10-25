@@ -7,7 +7,7 @@ import EmptyState from '../../components/ui/EmptyState';
 import PaginationBar from '../../components/ui/PaginationBar';
 import AdminViewAnalysisModal from '../../components/admin/AdminViewAnalysisModal';
 import { ButtonSpinner, SkeletonCards } from '../../components/ui/Loaders';
-import { classNames, colorForVerdict, flagStatusMeta, fmtDate, timeAgo } from '../../utils/credibility';
+import { classNames, flagStatusMeta, fmtDate, inkForVerdict, timeAgo } from '../../utils/credibility';
 import { useDebounce } from '../../hooks/useDebounce';
 const SEVERITY_META = {
   low: { label: 'Low', chip: 'chip-teal' },
@@ -127,7 +127,7 @@ export default function FlaggedPage() {
                     </div>
                     <div className="px-3 pb-2 d-flex flex-wrap gap-1 align-items-center">
                       <VerdictBadge verdict={analysis.verdict} size="sm" />
-                      <span className="font-mono text-small fw-bold" style={{ color: colorForVerdict(analysis.verdict) }}>{analysis.overallScore}/100</span>
+                      <span className="font-mono text-small fw-bold" style={{ color: inkForVerdict(analysis.verdict) }}>{analysis.overallScore}/100</span>
                       <span className={classNames('chip text-xs', severity.chip)}>{severity.label} severity</span>
                       <span className={classNames('chip text-xs ms-auto', meta.chip)}>{meta.label}</span>
                     </div>

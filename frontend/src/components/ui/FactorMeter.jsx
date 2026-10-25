@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
-import { colorForScore, weightPct } from '../../utils/credibility';
+import { colorForScore, inkForScore, weightPct } from '../../utils/credibility';
 export default function FactorMeter({ factor, compact }) {
   const { label, score, weight, reason, excluded } = factor;
-  const color = excluded ? 'var(--muted)' : colorForScore(score);
+  const fill = excluded ? 'var(--muted)' : colorForScore(score);
+  const color = excluded ? 'var(--muted)' : inkForScore(score);
   if (compact) {
     return (
       <div className="mb-3">
@@ -18,7 +19,7 @@ export default function FactorMeter({ factor, compact }) {
           <div className="progress" style={{ height: 6 }}>
             <motion.div
               className="progress-bar"
-              style={{ background: color }}
+              style={{ background: fill }}
               initial={{ width: 0 }}
               whileInView={{ width: `${score}%` }}
               viewport={{ once: true }}
@@ -46,7 +47,7 @@ export default function FactorMeter({ factor, compact }) {
         <div className="progress" style={{ height: 8 }}>
           <motion.div
             className="progress-bar"
-            style={{ background: color }}
+            style={{ background: fill }}
             initial={{ width: 0 }}
             whileInView={{ width: `${score}%` }}
             viewport={{ once: true }}
