@@ -16,6 +16,7 @@ export default function OtpPage() {
   const [resendBusy, setResendBusy] = useState(false);
   const [cooldown, setCooldown] = useState(0);
   const [error, setError] = useState('');
+  const [shake, setShake] = useState(false);
   const refs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
   useEffect(() => {
     if (!email) navigate('/login', { replace: true });
@@ -41,16 +42,31 @@ export default function OtpPage() {
   const onKey = (i, e) => {
     if (e.key === 'Backspace' && !digits[i] && i > 0) refs[i - 1].current.focus();
   };
-  const submit = async (e) => {
+  const fail = (message) => {
+    setError(message);
+    setShake(true);
+    window.setTimeout(() => setShake(false), 460);
+  };
+  const onPaste = (e) => {
+    const text = (e.clipboardData?.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+    if (!text) return;
     e.preventDefault();
-    if (code.length < 6) {
-      setError('Enter the complete 6-digit code.');
+    const next = ['', '', '', '', '', ''];
+    text.split('').forEach((ch, idx) => { next[idx] = ch; });
+    setDigits(next);
+    setError('');
+    refs[Math.min(text.length, 5)].current?.focus();
+  };
+  const submitCode = async (value) => {
+    if (busy) return;
+    if (value.length < 6) {
+      fail('Enter the complete 6-digit code.');
       return;
     }
     setBusy(true);
     setError('');
     try {
-      const data = await verifyOtp(email, code, purpose);
+      const data = await verifyOtp(email, value, purpose);
       toast.success('Verified.');
       if (purpose === 'reset') {
         navigate('/reset-password', { state: { token: data.resetToken, email } });
@@ -62,13 +78,23 @@ export default function OtpPage() {
         navigate(from && from.indexOf(prefix) === 0 ? from : home, { replace: true });
       }
     } catch (err) {
-      setError(errorMessage(err, 'Verification failed.'));
+      fail(errorMessage(err, 'Verification failed.'));
       setDigits(['', '', '', '', '', '']);
       refs[0].current.focus();
     } finally {
       setBusy(false);
     }
   };
+  const submit = (e) => {
+    e.preventDefault();
+    submitCode(code);
+  };
+  useEffect(() => {
+    if (code.length !== 6 || busy) return undefined;
+    const timer = window.setTimeout(() => submitCode(code), 180);
+    return () => window.clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code, busy]);
   const resend = async () => {
     if (cooldown > 0 || resendBusy) return;
     setResendBusy(true);
@@ -91,7 +117,7 @@ export default function OtpPage() {
         We sent a 6-digit code to <strong className="text-main">{email || 'your email'}</strong>. It expires in 10 minutes and can be used once.
       </p>
       <form onSubmit={submit} noValidate>
-        <div className="d-flex justify-content-between mb-3" role="group" aria-label="One-time code">
+        <div className={`otp-group d-flex justify-content-between mb-3${shake ? ' is-error' : ''}`} role="group" aria-label="One-time code">
           {digits.map((d, i) => (
             <input
               key={i}
@@ -100,15 +126,17 @@ export default function OtpPage() {
               inputMode="numeric"
               autoComplete={i === 0 ? 'one-time-code' : 'off'}
               aria-label={`Digit ${i + 1}`}
+              aria-invalid={Boolean(error)}
               maxLength={2}
               value={d}
               onChange={(e) => setDigit(i, e.target.value)}
               onKeyDown={(e) => onKey(i, e)}
+              onPaste={onPaste}
               disabled={busy}
             />
           ))}
         </div>
-        {error ? <div className="alert alert-danger py-2" style={{ fontSize: 13 }}>{error}</div> : null}
+        {error ? <div className="alert alert-danger py-2" style={{ fontSize: 13 }} role="alert">{error}</div> : null}
         <button type="submit" className="btn btn-primary w-100 mt-2" disabled={busy || code.length < 6}>
           {busy ? <ButtonSpinner /> : null}Verify code
         </button>
