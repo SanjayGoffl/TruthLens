@@ -4,11 +4,24 @@ const env = require('./config/env');
 const { connectDB } = require('./config/db');
 const { initSocket } = require('./utils/socket');
 const { ensureAdmin } = require('./services/adminInitService');
+const { seedSourcesIfMissing } = require('./services/sourceSeedService');
+
 async function start() {
   require('./services/cacheService').initRedis();
   await connectDB();
+
+  // Seed a minimal set of common publishers so scoring is grounded
+  // immediately instead of showing "Limited Information" for everything.
+  try {
+    const seedRes = await seedSourcesIfMissing();
+    if (seedRes && seedRes.seeded) console.log(`Seeded ${seedRes.seeded} source registry records`);
+  } catch (err) {
+    console.warn('Source seeding skipped/failed:', err.message);
+  }
+
   const admin = await ensureAdmin();
   if (admin) console.log(`Administrator account ready: ${admin.email}`);
+
   const server = http.createServer(app);
   initSocket(server);
   server.listen(env.port, '0.0.0.0', () => {

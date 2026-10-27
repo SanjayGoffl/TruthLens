@@ -50,6 +50,7 @@ async function verifyClaimsForArticle(claims, articleMeta, mode) {
       results = await gemini.groundedClaimCheck(eligible, articleMeta);
       if (results) method = 'Gemini grounded web search';
     } catch (err) {
+      console.warn('Grounded claim check failed, trying Serper fallback:', err.message);
       results = null;
     }
   }
@@ -79,6 +80,7 @@ async function verifyClaimsForArticle(claims, articleMeta, mode) {
       results = perClaim;
       method = 'Serper web search + Gemini stance analysis';
     } catch (err) {
+      console.warn('Serper claim verification failed:', err.message);
       results = null;
     }
   }

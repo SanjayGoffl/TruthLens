@@ -82,10 +82,35 @@ function firstJsonBlock(text) {
     return null;
   }
 }
+let disabledUntil = 0;
 function isConfigured() {
-  return Boolean(env.geminiApiKey);
+  if (!env.geminiApiKey) return false;
+  return Date.now() >= disabledUntil;
 }
-async function generateOnce(payload) {
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+function quarantineGeminiFor(hours = 1) {
+  // Avoid burning quota: once we hit daily quota exhaustion, repeated
+  // requests are guaranteed to fail until the reset window.
+  disabledUntil = Math.max(disabledUntil, Date.now() + hours * 60 * 60 * 1000);
+}
+/*
+ * The free tier allows a handful of requests per minute. Without a retry, a
+ * single 429 silently demoted a whole analysis to the offline heuristic, so
+ * the reported score could not be trusted. Wait out the short window once
+ * (honouring the API's own retryDelay when it sends one) before giving up.
+ */
+function retryDelayMs(err) {
+  const details = err.response && err.response.data && err.response.data.error && err.response.data.error.details;
+  if (Array.isArray(details)) {
+    const info = details.find((d) => d && /RetryInfo/.test(d['@type'] || ''));
+    const seconds = info && parseFloat(String(info.retryDelay || '').replace('s', ''));
+    if (Number.isFinite(seconds)) return Math.min(20000, Math.max(1000, seconds * 1000));
+  }
+  return 12000;
+}
+async function generateOnce(payload, attempt = 0) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
   let res;
   try {
@@ -96,6 +121,10 @@ async function generateOnce(payload) {
     });
   } catch (err) {
     const status = err.response ? err.response.status : 'network';
+    if ((status === 429 || status === 503) && attempt < 1) {
+      await sleep(retryDelayMs(err));
+      return generateOnce(payload, attempt + 1);
+    }
     const detail =
       (err.response && err.response.data && (err.response.data.error && err.response.data.error.message)) ||
       err.message;
@@ -106,8 +135,22 @@ async function generateOnce(payload) {
   if (!parts || !parts.length) return null;
   return parts.map((p) => p.text || '').join('');
 }
+/*
+ * Gemini 2.5 models expose `thinkingConfig.thinkingBudget`; the `thinkingLevel`
+ * enum only exists on Gemini 3. Sending `thinkingLevel` to a 2.5 model makes
+ * the API reject the whole request with HTTP 400, which used to push every
+ * analysis onto the heuristic fallback.
+ */
+const THINKING_BUDGET = { low: 0, medium: 4096, high: 16384 };
+
+function thinkingConfigFor(thinkingLevel) {
+  const level = THINKING_BUDGET[thinkingLevel] === undefined ? 'medium' : thinkingLevel;
+  if (/gemini-3/i.test(GEMINI_MODEL)) return { thinkingLevel: level };
+  return { thinkingBudget: THINKING_BUDGET[level] };
+}
+
 function buildGenerationConfig({ thinkingLevel = 'medium', maxOutputTokens = 8192, mime = null } = {}) {
-  const generationConfig = { maxOutputTokens, thinkingConfig: { thinkingLevel } };
+  const generationConfig = { maxOutputTokens, thinkingConfig: thinkingConfigFor(thinkingLevel) };
   if (mime) generationConfig.responseMimeType = mime;
   return generationConfig;
 }
@@ -144,7 +187,10 @@ Rules: Never fabricate sources; only cite pages you actually retrieved. If you c
   const claimsPayload = JSON.stringify(claims.map((c, i) => ({ index: i, quote: c.quote, importance: c.importance })));
   const payload = {
     contents: [{ role: 'user', parts: [{ text: instruction }, { text: claimsPayload }] }],
-    generationConfig: buildGenerationConfig({ thinkingLevel: 'medium', maxOutputTokens: 12000, mime: 'application/json' }),
+    /* Gemini rejects `responseMimeType: application/json` when a google_search
+       tool is attached (HTTP 400), which silently disabled every grounded
+       cross-source check. The prompt already demands JSON, so parse it out. */
+    generationConfig: buildGenerationConfig({ thinkingLevel: 'medium', maxOutputTokens: 12000 }),
     tools: [{ google_search: {} }]
   };
   const { text } = await generateOnce(payload);
