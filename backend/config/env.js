@@ -1,5 +1,10 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+
+// On Vercel, VERCEL_URL is set automatically (e.g. "my-app-abc123.vercel.app").
+// Derive frontend/backend URLs from it so the unified deploy just works.
+const vercelUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '';
+
 const env = {
   nodeEnv: process.env.NODE_ENV || 'development',
   port: parseInt(process.env.PORT, 10) || 5000,
@@ -13,15 +18,15 @@ const env = {
   serperApiKey: process.env.SERPER_API_KEY || '',
   googleClientId: process.env.GOOGLE_CLIENT_ID || '',
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-  googleCallbackUrl: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:5000/api/auth/google/callback',
+  googleCallbackUrl: process.env.GOOGLE_CALLBACK_URL || (vercelUrl ? `${vercelUrl}/api/auth/google/callback` : 'http://localhost:5000/api/auth/google/callback'),
   googleAdminEmail: process.env.GOOGLE_ADMIN_EMAIL || '',
   mailHost: process.env.MAIL_HOST || 'smtp.gmail.com',
   mailPort: parseInt(process.env.MAIL_PORT, 10) || 587,
   mailUsername: process.env.MAIL_USERNAME || '',
   mailPassword: process.env.MAIL_PASSWORD || '',
   mailFrom: process.env.MAIL_FROM || 'TruthLens AI <noreply@newsguard.local>',
-  frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173',
-  backendUrl: process.env.BACKEND_URL || 'http://localhost:5000',
+  frontendUrl: process.env.FRONTEND_URL || vercelUrl || 'http://localhost:5173',
+  backendUrl: process.env.BACKEND_URL || vercelUrl || 'http://localhost:5000',
   otpTtlMinutes: parseInt(process.env.OTP_TTL_MINUTES, 10) || 10,
   otpMaxAttempts: parseInt(process.env.OTP_MAX_ATTEMPTS, 10) || 5,
   adminName: process.env.ADMIN_NAME || 'Administrator',

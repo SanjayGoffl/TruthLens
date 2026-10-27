@@ -17,7 +17,20 @@ app.use(
 );
 app.use(
   cors({
-    origin: env.nodeEnv === 'production' ? [env.frontendUrl] : [env.frontendUrl, 'http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: function (origin, cb) {
+      // Same-origin requests (unified Vercel deploy) send no Origin header
+      if (!origin) return cb(null, true);
+      const allowed = [
+        env.frontendUrl,
+        env.backendUrl,
+        'http://localhost:5173',
+        'http://127.0.0.1:5173',
+        'http://localhost:5000'
+      ].filter(Boolean);
+      if (allowed.includes(origin) || /\.vercel\.app$/.test(origin)) return cb(null, true);
+      if (env.nodeEnv !== 'production') return cb(null, true);
+      return cb(new Error('Not allowed by CORS'));
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
   })
@@ -37,6 +50,7 @@ app.use('/api/analysis', authenticateToken, require('./routes/analysisRoutes'));
 app.use('/api/sources', authenticateToken, require('./routes/sourceRoutes'));
 app.use('/api/admin', authenticateToken, require('./middleware/auth').requireAdmin, require('./routes/adminRoutes'));
 // Serve the built web app (PWA) from the API when frontend/dist exists: one URL for phone install.
+// On Vercel this block is unused — Vercel's CDN serves static files directly.
 const path = require('path');
 const distDir = path.join(__dirname, '..', 'frontend', 'dist');
 if (require('fs').existsSync(path.join(distDir, 'index.html'))) {

@@ -1,12 +1,17 @@
 .env
 *.env
 backend/.env
+backend/.env.local
 backend/node_modules/
 frontend/node_modules/
 frontend/dist/
 mongodb-data/
 *.log
 .DS_Store
+
+# Vercel project settings (auto-generated, user-specific)
+.vercel/
+backend/.vercel/
 
 # MemPalace per-project files (issue #185)
 mempalace.yaml
